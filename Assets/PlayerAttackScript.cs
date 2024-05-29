@@ -9,22 +9,43 @@ public class PlayerAttackScript : MonoBehaviour
     Vector2 currMousePoint;
     Animator anim;
     [SerializeField] GameObject bullet;
-    [SerializeField] float bulletSpeed;
     [SerializeField] float allignFirePos;
-    [SerializeField] float fireTimer;
-    float fireCounter;
+    private float fireTimer;
+    private float fireCounter;
+    private float bulletSpeed;
     GameObject UI_bullet;
+    private static KeyCode[] fireModeKeys = { 
+        KeyCode.Alpha1, 
+        KeyCode.Alpha2
+    };
+    public enum FireMode
+    {
+        Single = 0,
+        Auto = 1
+    }
+    private FireMode fireMode;
     private void Awake()
     {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         anim = GetComponent<Animator>();
         fireCounter = Mathf.Infinity;
         UI_bullet = GameObject.FindGameObjectWithTag("UI_Bullet");
+        fireMode = FireMode.Single;
+        UpdateFireMode();
     }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        foreach (KeyCode key in fireModeKeys)
+        {
+            if (Input.GetKeyDown(key))
+            {
+                fireMode = (FireMode)(key - KeyCode.Alpha1);
+                UpdateFireMode();
+            }
+        }
+        bool keyEvent = fireMode == FireMode.Auto ? Input.GetKey(KeyCode.Mouse0) : Input.GetKeyDown(KeyCode.Mouse0);
+        if (keyEvent)
         {
             if (fireCounter > fireTimer && gameObject.GetComponent<PlayerScript>().IsAlive())
             {
@@ -35,6 +56,20 @@ public class PlayerAttackScript : MonoBehaviour
             }
         }
         fireCounter += Time.deltaTime;
+    }
+    private void UpdateFireMode()
+    {
+        switch (fireMode)
+        {
+            case FireMode.Single:
+                fireTimer = 0.5f;
+                bulletSpeed = 40f;
+                break;
+            case FireMode.Auto:
+                fireTimer = 0.1f;
+                bulletSpeed = 100f;
+                break;
+        }
     }
     private void OnDrawGizmos()
     {

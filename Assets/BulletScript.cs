@@ -37,9 +37,8 @@ public class BulletScript : MonoBehaviour
         fireDir = dir;
         fireSpeed = speed;
         isFire = true;
-        ServiceScript._instance.PlaySound(reloadBulletClip);
-
-        Invoke("Explode", 1000);
+        // ServiceScript._instance.PlaySound(reloadBulletClip);
+        Invoke("Explode", 100);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

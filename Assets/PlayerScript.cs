@@ -77,7 +77,7 @@ public class PlayerScript : MonoBehaviour
         anim.SetTrigger("isDead");
         ServiceScript._instance.PlaySound(gameOverClip);
         speed = 0;
-        StartCoroutine(ServiceScript._instance.TurnOnLight());
+        StartCoroutine(ServiceScript._instance.TurnOffLight());
         GameManager._instance.UpdateGameState(GameManager.GameState.Dead);
         Invoke("ReloadSceneWhenPlayerDead", 3f);
     }

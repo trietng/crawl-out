@@ -19,7 +19,7 @@ public class TitleScript : MonoBehaviour
     private void Start()
     {
         StartCoroutine(TextAppear(listInTitle));
-        StartCoroutine(ServiceScript._instance.TurnOnLight());
+        StartCoroutine(ServiceScript._instance.TurnOffLight());
     }
  
         IEnumerator TextAppear(List<string> sen)

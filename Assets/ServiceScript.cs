@@ -27,11 +27,11 @@ public class ServiceScript : MonoBehaviour
         coll.GetComponent<BoxCollider2D>().enabled = true;
 
     }
-    public IEnumerator TurnOnLight()
+    public IEnumerator TurnOffLight()
     {
         for (int i = 0; i < 10; i++ )
         {
-            globalLight.intensity += 0.1f;
+            globalLight.intensity -= 0.1f;
             yield return new WaitForSeconds(0.2f);
         }
     }

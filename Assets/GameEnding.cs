@@ -36,6 +36,6 @@ public class GameEnding : MonoBehaviour
         }
         yield return new WaitForSeconds(2);
         text.enabled = false;
-        StartCoroutine(ServiceScript._instance.TurnOnLight());
+        StartCoroutine(ServiceScript._instance.TurnOffLight());
     }
 }

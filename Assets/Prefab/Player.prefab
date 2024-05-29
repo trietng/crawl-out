@@ -377,9 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 682835529597806224, guid: 6a4e646626510254f8c2c11a0f42396c, type: 3}
-  bulletSpeed: 18
   allignFirePos: 0.8
-  fireTimer: 0.7
 --- !u!1001 &7458770672860006444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -514,15 +512,3 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   rotateSpeed: 0
   alignAngle: 0
-  light2D: {fileID: 5035043225466172840}
---- !u!114 &5035043225466172840 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2477808052154793348, guid: 885ffcb1bfc902b438885c4d1f848931, type: 3}
-  m_PrefabInstance: {fileID: 7458770672860006444}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3605207396825082636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
