@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0e08ba86f691b4993f687972d508d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 4
   bullet: {fileID: 682835529597806224, guid: 6a4e646626510254f8c2c11a0f42396c, type: 3}
   footstepClip: {fileID: 8300000, guid: ee139bdd2d7e9274d95fed7dddbecad0, type: 3}
   gameOverClip: {fileID: 8300000, guid: 5bb2efdb551ab894781b3a78de1f9ab7, type: 3}

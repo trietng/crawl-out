@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class PlayerScript : MonoBehaviour
     float hor, ver;
     Vector2 newPos;
     public float speed;
+    [NonSerialized] public float maxSpeed;
     Camera mainCam;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioClip footstepClip;
@@ -25,6 +27,7 @@ public class PlayerScript : MonoBehaviour
         rigit = GetComponent<Rigidbody2D>();
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         audi = GetComponent<AudioSource>();
+        maxSpeed = speed;
       //  GameManager._instance.UpdateGameState(GameManager.GameState.Nor);
     }
     // Start is called before the first frame update
