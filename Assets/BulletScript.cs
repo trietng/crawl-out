@@ -8,6 +8,7 @@ public class BulletScript : MonoBehaviour
     Vector2 fireDir;
     float fireSpeed;
     Vector2 currPos;
+    float audioClipLength;
     [SerializeField] float allignAngle;
     [SerializeField] AudioClip reloadBulletClip;
      private void Awake()
@@ -25,20 +26,16 @@ public class BulletScript : MonoBehaviour
             transform.position = currPos;
         }
     }
-    public void Fire(Vector2 dir, float speed)
+    public void Fire(Vector2 dir, float speed, float range)
     {
         GetComponent<Animator>().SetTrigger("fire");
-        if (dir.x > 0) GetComponent<AudioSource>().panStereo = 0.65f;
-        else GetComponent<AudioSource>().panStereo = -0.65f;
-
-        GetComponent<AudioSource>().Play();
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg  ;
         transform.rotation = Quaternion.AngleAxis(angle,Vector3.forward);
         fireDir = dir;
         fireSpeed = speed;
         isFire = true;
         // ServiceScript._instance.PlaySound(reloadBulletClip);
-        Invoke("Explode", 100);
+        Invoke("Explode", range / speed);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

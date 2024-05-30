@@ -13,6 +13,7 @@ public class PlayerAttackScript : MonoBehaviour
     private float fireTimer;
     private float fireCounter;
     private float bulletSpeed;
+    private float bulletRange;
     UI_BulletScript bulletScript;
     private static readonly KeyCode[] fireModeKeys = { 
         KeyCode.Alpha1, 
@@ -69,21 +70,25 @@ public class PlayerAttackScript : MonoBehaviour
             case FireMode.Single:
                 fireTimer = 0.5f;
                 bulletSpeed = 40f;
+                bulletRange = 12f;
                 shotCount = 1;
                 break;
             case FireMode.Burst:
                 fireTimer = 0.5f;
                 bulletSpeed = 20f;
+                bulletRange = 12f;
                 shotCount = 2;
                 break;
             case FireMode.Spread:
                 fireTimer = 0.5f;
                 bulletSpeed = 30f;
+                bulletRange = 8f;
                 shotCount = 3;
                 break;
             case FireMode.Auto:
                 fireTimer = 0.15f;
                 bulletSpeed = 20f;
+                bulletRange = 16f;
                 shotCount = 1;
                 break;
         }
@@ -131,7 +136,8 @@ public class PlayerAttackScript : MonoBehaviour
                     break;
             }
             StartCoroutine(ServiceScript._instance.TempRemoveCollider(_bullet, 0.1f));
-            _bullet.GetComponent<BulletScript>().Fire(curDir, bulletSpeed);
+            _bullet.GetComponent<BulletScript>().Fire(curDir, bulletSpeed, bulletRange);
+            bulletScript.PlayFireSound(curDir);
             if (fireMode == FireMode.Burst) {
                 // delay between shots
                 yield return new WaitForSeconds(0.2f);

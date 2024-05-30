@@ -279,6 +279,10 @@ PrefabInstance:
       propertyPath: MinDistance
       value: 1.0117216
       objectReference: {fileID: 0}
+    - target: {fileID: 5035043225466172840, guid: 49f8ba6c1ecbd0545b76f4e399e7b7e7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5301521423944454937, guid: 49f8ba6c1ecbd0545b76f4e399e7b7e7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.05
