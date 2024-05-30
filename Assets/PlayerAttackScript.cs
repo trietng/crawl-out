@@ -13,7 +13,7 @@ public class PlayerAttackScript : MonoBehaviour
     private float fireTimer;
     private float fireCounter;
     private float bulletSpeed;
-    GameObject UI_bullet;
+    UI_BulletScript bulletScript;
     private static readonly KeyCode[] fireModeKeys = { 
         KeyCode.Alpha1, 
         KeyCode.Alpha2,
@@ -34,7 +34,7 @@ public class PlayerAttackScript : MonoBehaviour
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         anim = GetComponent<Animator>();
         fireCounter = Mathf.Infinity;
-        UI_bullet = GameObject.FindGameObjectWithTag("UI_Bullet");
+        bulletScript = GameObject.FindGameObjectWithTag("UI_Bullet").GetComponent<UI_BulletScript>();
         fireMode = FireMode.Single;
         UpdateFireMode();
     }
@@ -87,6 +87,7 @@ public class PlayerAttackScript : MonoBehaviour
                 shotCount = 1;
                 break;
         }
+        bulletScript.UpdateBulletImage(fireMode);
     }
     private void OnDrawGizmos()
     {
@@ -98,7 +99,7 @@ public class PlayerAttackScript : MonoBehaviour
         if (ServiceScript._instance.bulletCount <= 0) yield break;
         int firedShotCount = Math.Min((int) ServiceScript._instance.bulletCount, shotCount);
         ServiceScript._instance.bulletCount -= firedShotCount;
-        UI_bullet.GetComponent<UI_BulletScript>().UpdateBulletCountText();
+        bulletScript.UpdateBulletCountText();
         if (dir.magnitude > 1) dir.Normalize();
         float angle = Vector2.Angle(Vector2.right, dir) < 90 ? Vector2.Angle(Vector2.right, dir) : 180 - Vector2.Angle(Vector2.right, dir);
         if (angle < 45)
@@ -111,7 +112,7 @@ public class PlayerAttackScript : MonoBehaviour
             anim.SetFloat("dirX", 0);
             anim.SetFloat("dirY", Mathf.Sign(dir.y));
         }
-        StartCoroutine(ServiceScript._instance.TempRemoveCollider(gameObject, 0.1f));
+        // StartCoroutine(ServiceScript._instance.TempRemoveCollider(gameObject, 0.1f));
         // StartCoroutine(tempSlowPlayer(0.1f));
         // ServiceScript._instance.TempRemoveCollider(gameObject, 3f);
         for (int i = 0; i < firedShotCount; i++)
@@ -121,16 +122,15 @@ public class PlayerAttackScript : MonoBehaviour
             switch (fireMode)
             {
                 case FireMode.Spread:
-                    curDir = Quaternion.Euler(0, 0, (i - 1) * 15) * curDir;
-                    StartCoroutine(ServiceScript._instance.TempRemoveCollider(_bullet, 0.1f));
+                    curDir = Quaternion.Euler(0, 0, (i - 1) * 10) * curDir;
                     break;
                 case FireMode.Burst:
-                    StartCoroutine(ServiceScript._instance.TempRemoveCollider(_bullet, 0.1f));
                     break;
                 case FireMode.Auto:
                     curDir = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-10, 10)) * curDir;
                     break;
             }
+            StartCoroutine(ServiceScript._instance.TempRemoveCollider(_bullet, 0.1f));
             _bullet.GetComponent<BulletScript>().Fire(curDir, bulletSpeed);
             if (fireMode == FireMode.Burst) {
                 // delay between shots

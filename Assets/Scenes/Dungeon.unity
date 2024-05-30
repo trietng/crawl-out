@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 44708553}
   - component: {fileID: 44708552}
   m_Layer: 5
-  m_Name: BulletCountImage
+  m_Name: WeaponImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,9 +226,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 68.01001, y: -63.95999}
-  m_SizeDelta: {x: 120, y: 120}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 32.00003, y: -63.95999}
+  m_SizeDelta: {x: 64, y: 64}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &44708552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7aa59a7cae35c294e9bb2357684c812c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6f91ba3a9ef719742b0e6f3a0fdf6068, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -535,9 +535,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 220, y: -72}
-  m_SizeDelta: {x: 137.94, y: 120}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 120, y: -63.95999}
+  m_SizeDelta: {x: 137.94, y: 64}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1437400814
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,6 @@
-using System.Collections;using System.Collections.Generic;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -7,11 +9,13 @@ public class ServiceScript : MonoBehaviour
     public static ServiceScript _instance { get; private set; }
     [SerializeField] Light2D globalLight;
     public float bulletCount;
+    [NonSerialized] public Sprite[] weaponSprites;
     private void Awake()
     {
         if (_instance != null && _instance != this) Destroy(this);
         else _instance = this;
         globalLight.intensity = 1;
+        weaponSprites = Resources.LoadAll<Sprite>("Weapon");
     }
     public void PlaySound(AudioClip _audiclip)
     {
