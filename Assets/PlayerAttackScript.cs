@@ -14,7 +14,7 @@ public class PlayerAttackScript : MonoBehaviour
     private float fireCounter;
     private float bulletSpeed;
     private float bulletRange;
-    UI_BulletScript bulletScript;
+    UI_BulletScript uiBulletScript;
     private static readonly KeyCode[] fireModeKeys = { 
         KeyCode.Alpha1, 
         KeyCode.Alpha2,
@@ -35,7 +35,7 @@ public class PlayerAttackScript : MonoBehaviour
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         anim = GetComponent<Animator>();
         fireCounter = Mathf.Infinity;
-        bulletScript = GameObject.FindGameObjectWithTag("UI_Bullet").GetComponent<UI_BulletScript>();
+        uiBulletScript = GameObject.FindGameObjectWithTag("UI_Bullet").GetComponent<UI_BulletScript>();
         fireMode = FireMode.Single;
         UpdateFireMode();
     }
@@ -65,6 +65,7 @@ public class PlayerAttackScript : MonoBehaviour
     }
     private void UpdateFireMode()
     {
+        var bulletScript = bullet.GetComponent<BulletScript>();
         switch (fireMode)
         {
             case FireMode.Single:
@@ -92,7 +93,8 @@ public class PlayerAttackScript : MonoBehaviour
                 shotCount = 1;
                 break;
         }
-        bulletScript.UpdateBulletImage(fireMode);
+        bulletScript.ApplyColorFiler(fireMode);
+        uiBulletScript.UpdateBulletImage(fireMode);
     }
     private void OnDrawGizmos()
     {
@@ -104,7 +106,7 @@ public class PlayerAttackScript : MonoBehaviour
         if (ServiceScript._instance.bulletCount <= 0) yield break;
         int firedShotCount = Math.Min((int) ServiceScript._instance.bulletCount, shotCount);
         ServiceScript._instance.bulletCount -= firedShotCount;
-        bulletScript.UpdateBulletCountText();
+        uiBulletScript.UpdateBulletCountText();
         if (dir.magnitude > 1) dir.Normalize();
         float angle = Vector2.Angle(Vector2.right, dir) < 90 ? Vector2.Angle(Vector2.right, dir) : 180 - Vector2.Angle(Vector2.right, dir);
         if (angle < 45)
@@ -137,7 +139,7 @@ public class PlayerAttackScript : MonoBehaviour
             }
             StartCoroutine(ServiceScript._instance.TempRemoveCollider(_bullet, 0.1f));
             _bullet.GetComponent<BulletScript>().Fire(curDir, bulletSpeed, bulletRange);
-            bulletScript.PlayFireSound(curDir);
+            uiBulletScript.PlayFireSound(curDir);
             if (fireMode == FireMode.Burst) {
                 // delay between shots
                 yield return new WaitForSeconds(0.2f);

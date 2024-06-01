@@ -8,7 +8,6 @@ public class BulletScript : MonoBehaviour
     Vector2 fireDir;
     float fireSpeed;
     Vector2 currPos;
-    float audioClipLength;
     [SerializeField] float allignAngle;
     [SerializeField] AudioClip reloadBulletClip;
      private void Awake()
@@ -24,6 +23,23 @@ public class BulletScript : MonoBehaviour
             currPos.x += fireDir.x * fireSpeed * Time.deltaTime;
             currPos.y += fireDir.y * fireSpeed * Time.deltaTime;
             transform.position = currPos;
+        }
+    }
+    public void ApplyColorFiler(PlayerAttackScript.FireMode fireMode)
+    {
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        switch (fireMode)
+        {
+            case PlayerAttackScript.FireMode.Single:
+            case PlayerAttackScript.FireMode.Burst:
+                spriteRenderer.color = Color.red;
+                break;
+            case PlayerAttackScript.FireMode.Spread:
+                spriteRenderer.color = Color.green;
+                break;
+            case PlayerAttackScript.FireMode.Auto:
+                spriteRenderer.color = Color.yellow;
+                break;
         }
     }
     public void Fire(Vector2 dir, float speed, float range)
@@ -47,7 +63,7 @@ public class BulletScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Zombie"))
         {
             collision.gameObject.transform.parent.GetComponent<ZombieScript>().HitZombie();
-             gameObject.GetComponent<Animator>().SetTrigger("explode");
+            gameObject.GetComponent<Animator>().SetTrigger("explode");
         }
     }
     public void Explode()
