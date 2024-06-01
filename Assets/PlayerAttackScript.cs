@@ -103,9 +103,8 @@ public class PlayerAttackScript : MonoBehaviour
     }
     IEnumerator Shoot(Vector2 dir)
     {
-        if (ServiceScript._instance.bulletCount <= 0) yield break;
-        int firedShotCount = Math.Min((int) ServiceScript._instance.bulletCount, shotCount);
-        ServiceScript._instance.bulletCount -= firedShotCount;
+        if (ServiceScript._instance.bulletCount < shotCount) yield break;
+        ServiceScript._instance.bulletCount -= shotCount;
         uiBulletScript.UpdateBulletCountText();
         if (dir.magnitude > 1) dir.Normalize();
         float angle = Vector2.Angle(Vector2.right, dir) < 90 ? Vector2.Angle(Vector2.right, dir) : 180 - Vector2.Angle(Vector2.right, dir);
@@ -122,7 +121,7 @@ public class PlayerAttackScript : MonoBehaviour
         // StartCoroutine(ServiceScript._instance.TempRemoveCollider(gameObject, 0.1f));
         // StartCoroutine(tempSlowPlayer(0.1f));
         // ServiceScript._instance.TempRemoveCollider(gameObject, 3f);
-        for (int i = 0; i < firedShotCount; i++)
+        for (int i = 0; i < shotCount; i++)
         {
             var curDir = dir;
             GameObject _bullet = Instantiate(bullet, (Vector2) gameObject.transform.position + Vector2.up * allignFirePos, Quaternion.identity);
