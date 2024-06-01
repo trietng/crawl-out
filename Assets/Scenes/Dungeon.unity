@@ -187,7 +187,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: __MANAGER__
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2114554152885882266, guid: d6d16fffbe7b89a4ca2c7ecddbfe68cd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -435,7 +436,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b18ffb70c909ec54b9f9ba1e9ab8d43b, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 0.7
@@ -553,6 +554,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeeee8aefc983e148b74420db428d29f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pistolFireSound: {fileID: 8300000, guid: 1b779de011fe6674c9bb749bcb8aac1a, type: 3}
+  shotgunFireSound: {fileID: 8300000, guid: eb04544ea73d7ee4aa0a7abc668fad05, type: 3}
+  machineGunFireSound: {fileID: 8300000, guid: efc00af7f151fe84a87a79a47862753d, type: 3}
 --- !u!114 &1407858888
 MonoBehaviour:
   m_ObjectHideFlags: 0

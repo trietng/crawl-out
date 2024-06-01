@@ -95,6 +95,7 @@ public class PlayerAttackScript : MonoBehaviour
         }
         bulletScript.ApplyColorFiler(fireMode);
         uiBulletScript.UpdateBulletImage(fireMode);
+        uiBulletScript.UpdateAudioClip(fireMode);
     }
     private void OnDrawGizmos()
     {
