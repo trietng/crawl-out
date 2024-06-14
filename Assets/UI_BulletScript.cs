@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class UI_BulletScript : MonoBehaviour

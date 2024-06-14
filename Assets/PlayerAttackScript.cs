@@ -9,7 +9,8 @@ public class PlayerAttackScript : MonoBehaviour
     Vector2 currMousePoint;
     Animator anim;
     [SerializeField] GameObject bullet;
-    [SerializeField] float allignFirePos;
+    [SerializeField] GameObject slash;
+    [SerializeField] float alignFirePos;
     private float fireTimer;
     private float fireCounter;
     private float bulletSpeed;
@@ -19,11 +20,13 @@ public class PlayerAttackScript : MonoBehaviour
         KeyCode.Alpha1, 
         KeyCode.Alpha2,
         KeyCode.Alpha3,
-        KeyCode.Alpha4
+        KeyCode.Alpha4,
+        KeyCode.Alpha5
     };
     public enum FireMode
     {
-        Single = 0,
+        Melee,
+        Single,
         Burst,
         Spread,
         Auto
@@ -36,7 +39,7 @@ public class PlayerAttackScript : MonoBehaviour
         anim = GetComponent<Animator>();
         fireCounter = Mathf.Infinity;
         uiBulletScript = GameObject.FindGameObjectWithTag("UI_Bullet").GetComponent<UI_BulletScript>();
-        fireMode = FireMode.Single;
+        fireMode = FireMode.Melee;
         UpdateFireMode();
     }
     // Update is called once per frame
@@ -56,8 +59,10 @@ public class PlayerAttackScript : MonoBehaviour
             if (fireCounter > fireTimer && gameObject.GetComponent<PlayerScript>().IsAlive())
             {
                 currMousePoint = mainCam.ScreenToWorldPoint(Input.mousePosition);
-                anim.SetTrigger("isShooting");
-                StartCoroutine(Shoot(currMousePoint - ((Vector2)gameObject.transform.position + Vector2.up * allignFirePos)));
+                if (fireMode != FireMode.Melee) {
+                    anim.SetTrigger("isShooting");
+                }
+                StartCoroutine(Attack(currMousePoint - ((Vector2)gameObject.transform.position + Vector2.up * alignFirePos)));
                 fireCounter = 0;
             }
         }
@@ -68,6 +73,10 @@ public class PlayerAttackScript : MonoBehaviour
         var bulletScript = bullet.GetComponent<BulletScript>();
         switch (fireMode)
         {
+            case FireMode.Melee:
+                fireTimer = 0.4f;
+                shotCount = 0;
+                break;
             case FireMode.Single:
                 fireTimer = 0.5f;
                 bulletSpeed = 40f;
@@ -102,7 +111,7 @@ public class PlayerAttackScript : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawLine(gameObject.transform.position, currMousePoint);
     }
-    IEnumerator Shoot(Vector2 dir)
+    IEnumerator Attack(Vector2 dir)
     {
         if (ServiceScript._instance.bulletCount < shotCount) yield break;
         ServiceScript._instance.bulletCount -= shotCount;
@@ -122,27 +131,37 @@ public class PlayerAttackScript : MonoBehaviour
         // StartCoroutine(ServiceScript._instance.TempRemoveCollider(gameObject, 0.1f));
         // StartCoroutine(tempSlowPlayer(0.1f));
         // ServiceScript._instance.TempRemoveCollider(gameObject, 3f);
-        for (int i = 0; i < shotCount; i++)
-        {
-            var curDir = dir;
-            GameObject _bullet = Instantiate(bullet, (Vector2) gameObject.transform.position + Vector2.up * allignFirePos, Quaternion.identity);
-            switch (fireMode)
+        if (fireMode == FireMode.Melee) {
+            GameObject _slash = Instantiate(
+                slash, 
+                (Vector2) gameObject.transform.position + Vector2.up * alignFirePos + dir * 1.25f,
+                Quaternion.identity);
+            StartCoroutine(ServiceScript._instance.TempRemoveCollider(_slash, 0.1f));
+            _slash.GetComponent<SlashScript>().Fire(dir);
+        }
+        else {
+            for (int i = 0; i < shotCount; i++)
             {
-                case FireMode.Spread:
-                    curDir = Quaternion.Euler(0, 0, (i - 1) * 10) * curDir;
-                    break;
-                case FireMode.Burst:
-                    break;
-                case FireMode.Auto:
-                    curDir = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-10, 10)) * curDir;
-                    break;
-            }
-            StartCoroutine(ServiceScript._instance.TempRemoveCollider(_bullet, 0.1f));
-            _bullet.GetComponent<BulletScript>().Fire(curDir, bulletSpeed, bulletRange);
-            uiBulletScript.PlayFireSound(curDir);
-            if (fireMode == FireMode.Burst) {
-                // delay between shots
-                yield return new WaitForSeconds(0.2f);
+                var curDir = dir;
+                GameObject _bullet = Instantiate(bullet, (Vector2) gameObject.transform.position + Vector2.up * alignFirePos, Quaternion.identity);
+                switch (fireMode)
+                {
+                    case FireMode.Spread:
+                        curDir = Quaternion.Euler(0, 0, (i - 1) * 10) * curDir;
+                        break;
+                    case FireMode.Burst:
+                        break;
+                    case FireMode.Auto:
+                        curDir = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-5, 5)) * curDir;
+                        break;
+                }
+                StartCoroutine(ServiceScript._instance.TempRemoveCollider(_bullet, 0.1f));
+                _bullet.GetComponent<BulletScript>().Fire(curDir, bulletSpeed, bulletRange);
+                uiBulletScript.PlayFireSound(curDir);
+                if (fireMode == FireMode.Burst) {
+                    // delay between shots
+                    yield return new WaitForSeconds(0.2f);
+                }
             }
         }
     }

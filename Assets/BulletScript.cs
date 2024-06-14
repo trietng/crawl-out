@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletScript : MonoBehaviour
@@ -8,7 +6,7 @@ public class BulletScript : MonoBehaviour
     Vector2 fireDir;
     float fireSpeed;
     Vector2 currPos;
-    [SerializeField] float allignAngle;
+    [SerializeField] float alignAngle;
     [SerializeField] AudioClip reloadBulletClip;
      private void Awake()
     {
