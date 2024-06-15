@@ -8,7 +8,7 @@ public class BulletScript : MonoBehaviour
     Vector2 currPos;
     [SerializeField] float alignAngle;
     [SerializeField] AudioClip reloadBulletClip;
-     private void Awake()
+    private void Awake()
     {
         isFire = false;
     }
@@ -43,7 +43,7 @@ public class BulletScript : MonoBehaviour
     public void Fire(Vector2 dir, float speed, float range)
     {
         GetComponent<Animator>().SetTrigger("fire");
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg  ;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle,Vector3.forward);
         fireDir = dir;
         fireSpeed = speed;

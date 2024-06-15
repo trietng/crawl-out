@@ -143,7 +143,7 @@ public class PlayerAttackScript : MonoBehaviour
             for (int i = 0; i < shotCount; i++)
             {
                 var curDir = dir;
-                GameObject _bullet = Instantiate(bullet, (Vector2) gameObject.transform.position + Vector2.up * alignFirePos, Quaternion.identity);
+                GameObject _bullet = Instantiate(bullet, (Vector2) gameObject.transform.position + Vector2.up * alignFirePos + curDir * 0.8f, Quaternion.identity);
                 switch (fireMode)
                 {
                     case FireMode.Spread:
