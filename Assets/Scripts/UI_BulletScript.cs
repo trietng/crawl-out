@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_BulletScript : MonoBehaviour
@@ -46,3 +46,4 @@ public class UI_BulletScript : MonoBehaviour
         GetComponentInChildren<AudioSource>().Play();
     }
 }
+*/
