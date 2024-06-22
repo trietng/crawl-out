@@ -21,6 +21,10 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] AudioClip gameOverClip;
 
     public AudioSource audi { get; private set; }
+    
+    private int maxHealth = 100;
+    private int currentHealth;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -28,6 +32,7 @@ public class PlayerScript : MonoBehaviour
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         audi = GetComponent<AudioSource>();
         maxSpeed = speed;
+        currentHealth = maxHealth;
         //  GameManager._instance.UpdateGameState(GameManager.GameState.Nor);
     }
     // Start is called before the first frame update
@@ -70,8 +75,23 @@ public class PlayerScript : MonoBehaviour
     }
     public bool IsAlive()
     {
-        return GameManager._instance.State != GameManager.GameState.Dead;
+        // return GameManager._instance.State != GameManager.GameState.Dead;
+        return currentHealth > 0;
     }
+
+    public void TakeDamage(int damage)
+    {
+        if (!IsAlive()) return;
+
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            PlayerDead();
+        }
+    }
+    
     public void PlayerDead()
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = false;

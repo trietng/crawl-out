@@ -15,6 +15,7 @@ public class PlayerAttackScript : MonoBehaviour
     private float fireCounter;
     private float bulletSpeed;
     private float bulletRange;
+    // private int damageAmount = 10; // Adjust damage amount as needed
     UI_BulletScript uiBulletScript;
     private static readonly KeyCode[] fireModeKeys = {
         KeyCode.Alpha1,

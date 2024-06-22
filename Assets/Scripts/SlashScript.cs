@@ -8,14 +8,14 @@ public class SlashScript : MonoBehaviour
     {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        Invoke(nameof(Explode), 0.2f);
+        Invoke(nameof(Explode), 0.25f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Zombie"))
         {
-            collision.gameObject.transform.parent.GetComponent<ZombieScript>().HitZombie();
+            collision.gameObject.transform.parent.GetComponent<ZombieScript>().TakeDamage(10); // Adjust damage amount as needed
         }
     }
 
