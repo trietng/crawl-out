@@ -1,4 +1,4 @@
-/*using UnityEngine;
+using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
@@ -68,4 +68,4 @@ public class BulletScript : MonoBehaviour
     {
         Destroy(gameObject);
     }
-}*/
+}

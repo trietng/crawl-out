@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SlashScript : MonoBehaviour
@@ -13,9 +15,10 @@ public class SlashScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Zombie"))
         {
-            collision.gameObject.GetComponent<ZombieScript>().TakeDamage(10); // Adjust damage amount as needed
+            collision.gameObject.transform.parent.GetComponent<ZombieScript>().HitZombie();
         }
     }
+
 
     public void Explode()
     {
