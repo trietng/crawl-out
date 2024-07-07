@@ -48,18 +48,18 @@ public class BulletScript : MonoBehaviour
         fireDir = dir;
         fireSpeed = speed;
         isFire = true;
-        // ServiceScript._instance.PlaySound(reloadBulletClip);
+        // GameManager._instance.PlaySound(reloadBulletClip);
         Invoke(nameof(Explode), range / speed);
     }
-    // private void OnCollisionEnter2D(Collision2D collision)
-    // {
-    //     fireSpeed = 0f;
-    //     gameObject.GetComponent<Animator>().SetTrigger("explode");
-    // }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        CollisionAction();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        bool hit = true;
+        bool hit = false;
         if (collision.gameObject.CompareTag("Zombie"))
         {
             var zombieScript = collision.gameObject.transform.parent.GetComponent<ZombieScript>();
@@ -68,9 +68,14 @@ public class BulletScript : MonoBehaviour
         }
         if (hit)
         {
-            fireSpeed = 0f;
-            gameObject.GetComponent<Animator>().SetTrigger("explode");
+            CollisionAction();
         }
+    }
+
+    private void CollisionAction()
+    {
+        fireSpeed = 0f;
+        gameObject.GetComponent<Animator>().SetTrigger("explode");
     }
 
     public void Explode()

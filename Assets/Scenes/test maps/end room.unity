@@ -1294,7 +1294,7 @@ Transform:
   m_GameObject: {fileID: 709090456}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.027010037, y: 1.0063, z: -9.926863}
+  m_LocalPosition: {x: -0.026728332, y: 1.00631, z: -9.926863}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1408,7 +1408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19939e3bddce03e40bd91f52db66ea43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneBuildIndex: 2
+  sceneBuildIndex: 3
 --- !u!61 &843197964
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4897,7 +4897,7 @@ PrefabInstance:
     - target: {fileID: 8907855443786761762, guid: 49f8ba6c1ecbd0545b76f4e399e7b7e7, type: 3}
       propertyPath: mainCamera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 709090458}
     - target: {fileID: 8907855443786761762, guid: 49f8ba6c1ecbd0545b76f4e399e7b7e7, type: 3}
       propertyPath: rotateSpeed
       value: 100

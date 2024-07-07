@@ -98,14 +98,14 @@ public class PlayerScript : MonoBehaviour
         gameObject.GetComponentInChildren<CapsuleCollider2D>().enabled = false;
         gameObject.GetComponentInChildren<Light2D>().intensity = 0;
         anim.SetTrigger("isDead");
-        ServiceScript._instance.PlaySound(gameOverClip);
+        GameManager.Instance.PlaySound(gameOverClip);
         speed = 0;
-        StartCoroutine(ServiceScript._instance.TurnOffLight());
-        GameManager._instance.UpdateGameState(GameManager.GameState.Dead);
+        StartCoroutine(GameManager.Instance.TurnOffLight());
+        GameManager.Instance.UpdateGameState(GameManager.GameState.Dead);
         Invoke("ReloadSceneWhenPlayerDead", 3f);
     }
     public void ReloadSceneWhenPlayerDead()
     {
-        GameManager._instance.ReloadScene();
+        GameManager.Instance.ReloadScene();
     }
 }

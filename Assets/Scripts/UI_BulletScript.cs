@@ -13,15 +13,15 @@ public class UI_BulletScript : MonoBehaviour
     }
     private void Start()
     {
-        bulletCountText.text = ServiceScript._instance.bulletCount.ToString();
+        bulletCountText.text = GameManager.Instance.bulletCount.ToString();
     }
     public void UpdateBulletCountText()
     {
-        bulletCountText.text = ServiceScript._instance.bulletCount.ToString();
+        bulletCountText.text = GameManager.Instance.bulletCount.ToString();
     }
     public void UpdateBulletImage(PlayerAttackScript.FireMode fireMode)
     {
-        GetComponentInChildren<Image>().sprite = ServiceScript._instance.weaponSprites[(int)fireMode];
+        GetComponentInChildren<Image>().sprite = GameManager.Instance.weaponSprites[(int)fireMode];
     }
     public void UpdateAudioClip(PlayerAttackScript.FireMode fireMode)
     {

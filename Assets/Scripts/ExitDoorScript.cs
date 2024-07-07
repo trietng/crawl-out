@@ -7,6 +7,6 @@ public class ExitDoorScript : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-            GameManager._instance.UpdateGameState(GameManager.GameState.Win);
+            GameManager.Instance.UpdateGameState(GameManager.GameState.Win);
     }
 }

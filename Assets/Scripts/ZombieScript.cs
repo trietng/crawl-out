@@ -125,7 +125,7 @@ public class ZombieScript : MonoBehaviour
     {
         isDead = true;
         audi.priority = 0;
-        ServiceScript._instance.PlaySound(bodyHitClip);
+        GameManager.Instance.PlaySound(bodyHitClip);
         anim.SetTrigger("isDead");
         speed = 0;
     }

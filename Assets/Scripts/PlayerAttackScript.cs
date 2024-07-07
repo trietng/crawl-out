@@ -115,8 +115,8 @@ public class PlayerAttackScript : MonoBehaviour
     }
     IEnumerator Attack(Vector2 dir)
     {
-        if (ServiceScript._instance.bulletCount < shotCount) yield break;
-        ServiceScript._instance.bulletCount -= shotCount;
+        if (GameManager.Instance.bulletCount < shotCount) yield break;
+        GameManager.Instance.bulletCount -= shotCount;
         uiBulletScript.UpdateBulletCountText();
         if (dir.magnitude > 1) dir.Normalize();
         float angle = Vector2.Angle(Vector2.right, dir) < 90 ? Vector2.Angle(Vector2.right, dir) : 180 - Vector2.Angle(Vector2.right, dir);
@@ -130,16 +130,16 @@ public class PlayerAttackScript : MonoBehaviour
             anim.SetFloat("dirX", 0);
             anim.SetFloat("dirY", Mathf.Sign(dir.y));
         }
-        // StartCoroutine(ServiceScript._instance.TempRemoveCollider(gameObject, 0.1f));
+        // StartCoroutine(GameManager._instance.TempRemoveCollider(gameObject, 0.1f));
         // StartCoroutine(tempSlowPlayer(0.1f));
-        // ServiceScript._instance.TempRemoveCollider(gameObject, 3f);
+        // GameManager._instance.TempRemoveCollider(gameObject, 3f);
         if (fireMode == FireMode.Melee)
         {
             GameObject _slash = Instantiate(
                 slash,
                 (Vector2)gameObject.transform.position + Vector2.up * alignFirePos + dir * 1.25f,
                 Quaternion.identity);
-            StartCoroutine(ServiceScript._instance.TempRemoveCollider(_slash, 0.1f));
+            StartCoroutine(GameManager.Instance.TempRemoveCollider(_slash, 0.1f));
             _slash.GetComponent<SlashScript>().Fire(dir);
         }
         else
@@ -159,7 +159,7 @@ public class PlayerAttackScript : MonoBehaviour
                         curDir = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-5, 5)) * curDir;
                         break;
                 }
-                StartCoroutine(ServiceScript._instance.TempRemoveCollider(_bullet, 0.1f));
+                StartCoroutine(GameManager.Instance.TempRemoveCollider(_bullet, 0.05f));
                 _bullet.GetComponent<BulletScript>().Fire(curDir, bulletSpeed, bulletRange);
                 uiBulletScript.PlayFireSound(curDir);
                 if (fireMode == FireMode.Burst)
