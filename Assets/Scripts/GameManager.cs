@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager Instance { get; private set; }
 
     public GameState State { get; private set; }
-    private Light2D globalLight;
+    public static Light2D globalLight;
     public float bulletCount;
     [NonSerialized] public Sprite[] weaponSprites;
 
@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             weaponSprites = Resources.LoadAll<Sprite>("Weapon");
-            // find component named "Lighting" in the scene
             globalLight = GameObject.Find("Lighting").GetComponent<Light2D>();
             DontDestroyOnLoad(gameObject);
         }
@@ -83,6 +82,8 @@ public class GameManager : MonoBehaviour
         coll.GetComponent<BoxCollider2D>().enabled = true;
 
     }
+
+    // Do not use this method
     public IEnumerator TurnOffLight()
     {
         for (int i = 0; i < 10; i++ )

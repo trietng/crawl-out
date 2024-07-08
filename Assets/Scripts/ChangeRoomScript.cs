@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 public class ChangeRoomScript : MonoBehaviour
@@ -27,11 +28,11 @@ public class ChangeRoomScript : MonoBehaviour
         // Find the player object
         var player = GameObject.FindGameObjectWithTag("Player");
         // Get current main camera
-        var mainCamera = Camera.main;
+        var mainCam = Camera.main;
 
-        PlayerScript.Instance.mainCam = mainCamera;
-        PlayerAttack.PlayerAttackScript.Instance.mainCam = mainCamera;
-        FlashLightScript.mainCam = mainCamera;
+        PlayerScript.Instance.mainCam = mainCam;
+        PlayerAttack.PlayerAttackScript.Instance.mainCam = mainCam;
+        GameManager.globalLight = GameObject.Find("Lighting").GetComponent<Light2D>();
 
         // Find the virtual camera object
         var virtualCamera = GameObject.Find("Virtual Camera");
