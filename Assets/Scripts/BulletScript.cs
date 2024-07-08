@@ -23,19 +23,19 @@ public class BulletScript : MonoBehaviour
             transform.position = currPos;
         }
     }
-    public void ApplyColorFiler(PlayerAttackScript.FireMode fireMode)
+    public void ApplyColorFiler(PlayerAttack.FireMode fireMode)
     {
         var spriteRenderer = GetComponent<SpriteRenderer>();
         switch (fireMode)
         {
-            case PlayerAttackScript.FireMode.Single:
-            case PlayerAttackScript.FireMode.Burst:
+            case PlayerAttack.FireMode.Single:
+            case PlayerAttack.FireMode.Burst:
                 spriteRenderer.color = Color.red;
                 break;
-            case PlayerAttackScript.FireMode.Spread:
+            case PlayerAttack.FireMode.Spread:
                 spriteRenderer.color = Color.green;
                 break;
-            case PlayerAttackScript.FireMode.Auto:
+            case PlayerAttack.FireMode.Auto:
                 spriteRenderer.color = Color.yellow;
                 break;
         }

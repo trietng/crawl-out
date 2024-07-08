@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
 using System.Collections;
+using System.Collections.Generic;
 
 
 public class GameManager : MonoBehaviour
@@ -15,12 +16,15 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public Sprite[] weaponSprites;
 
     public static event Action<GameState> OnGameStateChanged;
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
             weaponSprites = Resources.LoadAll<Sprite>("Weapon");
+            // find component named "Lighting" in the scene
+            globalLight = GameObject.Find("Lighting").GetComponent<Light2D>();
             DontDestroyOnLoad(gameObject);
         }
         else

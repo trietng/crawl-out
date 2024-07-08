@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class FlashLightScript : MonoBehaviour
 {
-    [SerializeField] Camera mainCamera;
+    [NonSerialized] public static Camera mainCam;
     [SerializeField] float rotateSpeed;
     Vector2 currMousePoint;
     [SerializeField] float alignAngle;
@@ -11,6 +12,7 @@ public class FlashLightScript : MonoBehaviour
 
     void Awake()
     {
+        mainCam = Camera.main;
         light2D = GetComponent<Light2D>();
     }
 
@@ -22,7 +24,7 @@ public class FlashLightScript : MonoBehaviour
             light2D.enabled = !light2D.enabled;
         }
 
-        currMousePoint = (Vector2)mainCamera.ScreenToWorldPoint(Input.mousePosition) - (Vector2)transform.position ;
+        currMousePoint = (Vector2)mainCam.ScreenToWorldPoint(Input.mousePosition) - (Vector2)transform.position ;
 
         float angle = Mathf.Atan2(currMousePoint.y, currMousePoint.x) * Mathf.Rad2Deg  + alignAngle;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);

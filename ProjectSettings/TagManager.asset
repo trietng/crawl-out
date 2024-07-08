@@ -9,6 +9,7 @@ TagManager:
   - PlayerBound
   - UI_InScene
   - UI_Bullet
+  - ExitAnchor
   layers:
   - Default
   - TransparentFX

@@ -1,40 +1,56 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_BulletScript : MonoBehaviour
+
+public class BulletUIScript : MonoBehaviour
 {
     Text bulletCountText;
+    Image bulletImage;
     [SerializeField] AudioClip pistolFireSound;
     [SerializeField] AudioClip shotgunFireSound;
     [SerializeField] AudioClip machineGunFireSound;
-    private void Awake()
+
+    public static BulletUIScript Instance { get; private set; }
+
+    void Awake()
     {
-        bulletCountText = GetComponentInChildren<Text>();
+        if (Instance == null)
+        {
+            Instance = this;
+            bulletCountText = GetComponentInChildren<Text>();
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
+
     private void Start()
     {
         bulletCountText.text = GameManager.Instance.bulletCount.ToString();
     }
+
     public void UpdateBulletCountText()
     {
         bulletCountText.text = GameManager.Instance.bulletCount.ToString();
     }
-    public void UpdateBulletImage(PlayerAttackScript.FireMode fireMode)
+    public void UpdateBulletImage(PlayerAttack.FireMode fireMode)
     {
         GetComponentInChildren<Image>().sprite = GameManager.Instance.weaponSprites[(int)fireMode];
     }
-    public void UpdateAudioClip(PlayerAttackScript.FireMode fireMode)
+    public void UpdateAudioClip(PlayerAttack.FireMode fireMode)
     {
         switch (fireMode)
         {
-            case PlayerAttackScript.FireMode.Single:
-            case PlayerAttackScript.FireMode.Burst:
+            case PlayerAttack.FireMode.Single:
+            case PlayerAttack.FireMode.Burst:
                 GetComponentInChildren<AudioSource>().clip = pistolFireSound;
                 break;
-            case PlayerAttackScript.FireMode.Spread:
+            case PlayerAttack.FireMode.Spread:
                 GetComponentInChildren<AudioSource>().clip = shotgunFireSound;
                 break;
-            case PlayerAttackScript.FireMode.Auto:
+            case PlayerAttack.FireMode.Auto:
                 GetComponentInChildren<AudioSource>().clip = machineGunFireSound;
                 break;
         }

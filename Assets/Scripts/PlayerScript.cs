@@ -15,7 +15,7 @@ public class PlayerScript : MonoBehaviour
     Vector2 newPos;
     public float speed;
     [NonSerialized] public float maxSpeed;
-    Camera mainCam;
+    [NonSerialized] public Camera mainCam;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioClip footstepClip;
     [SerializeField] AudioClip gameOverClip;
@@ -25,19 +25,30 @@ public class PlayerScript : MonoBehaviour
     private int maxHealth = 100;
     private int currentHealth;
 
+    public static PlayerScript Instance { get; private set; }
+
     private void Awake()
     {
-        anim = GetComponent<Animator>();
-        rigit = GetComponent<Rigidbody2D>();
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        audi = GetComponent<AudioSource>();
-        maxSpeed = speed;
-        currentHealth = maxHealth;
-        //  GameManager._instance.UpdateGameState(GameManager.GameState.Nor);
+        if (Instance == null)
+        {
+            Instance = this;
+            mainCam = Camera.main;
+            anim = GetComponent<Animator>();
+            rigit = GetComponent<Rigidbody2D>();
+            audi = GetComponent<AudioSource>();
+            maxSpeed = speed;
+            currentHealth = maxHealth;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     // Start is called before the first frame update
     void Start()
     {
+        print("PlayerScript Start() called");
         anim.SetFloat("dirX", 0);
         anim.SetFloat("dirY", -1);
         audi.clip = footstepClip;
