@@ -115,8 +115,12 @@ namespace PlayerAttack
                     break;
             }
             bulletScript.ApplyColorFiler(fireMode);
-            // BulletUIScript.Instance.UpdateBulletImage(fireMode);
-            // BulletUIScript.Instance.UpdateAudioClip(fireMode);
+            // Weird bug where PlayerUIScript.Instance is null
+            if (PlayerUIScript.Instance != null) 
+            {
+                PlayerUIScript.Instance.UpdateBulletImage(fireMode);
+                PlayerUIScript.Instance.UpdateAudioClip(fireMode);
+            }
         }
         private void OnDrawGizmos()
         {
@@ -125,9 +129,9 @@ namespace PlayerAttack
         }
         IEnumerator Attack(Vector2 dir)
         {
-            if (GameManager.Instance.bulletCount < shotCount) yield break;
-            GameManager.Instance.bulletCount -= shotCount;
-            BulletUIScript.Instance.UpdateBulletCountText();
+            // if (GameManager.Instance.bulletCount < shotCount) yield break;
+            // GameManager.Instance.bulletCount -= shotCount;
+            // BulletUIScript.Instance.UpdateBulletCountText();
             if (dir.magnitude > 1) dir.Normalize();
             float angle = Vector2.Angle(Vector2.right, dir) < 90 ? Vector2.Angle(Vector2.right, dir) : 180 - Vector2.Angle(Vector2.right, dir);
             if (angle < 45)
@@ -171,7 +175,7 @@ namespace PlayerAttack
                     }
                     StartCoroutine(GameManager.Instance.TempRemoveCollider(_bullet, 0.05f));
                     _bullet.GetComponent<BulletScript>().Fire(curDir, bulletSpeed, bulletRange);
-                    BulletUIScript.Instance.PlayFireSound(curDir);
+                    PlayerUIScript.Instance.PlayFireSound(curDir);
                     if (fireMode == FireMode.Burst)
                     {
                         // delay between shots

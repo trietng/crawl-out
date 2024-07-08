@@ -48,11 +48,9 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        print("PlayerScript Start() called");
         anim.SetFloat("dirX", 0);
         anim.SetFloat("dirY", -1);
         audi.clip = footstepClip;
-
     }
 
     // Update is called once per frame
