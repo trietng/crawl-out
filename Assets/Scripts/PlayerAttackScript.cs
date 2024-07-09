@@ -44,7 +44,7 @@ namespace PlayerAttack
                 Instance = this;
                 anim = GetComponent<Animator>();
                 mainCam = Camera.main;
-                fireMode = FireMode.Single;
+                fireMode = FireMode.Melee;
                 UpdateFireMode();
                 DontDestroyOnLoad(gameObject);
             }
