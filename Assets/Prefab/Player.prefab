@@ -377,7 +377,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 682835529597806224, guid: 6a4e646626510254f8c2c11a0f42396c, type: 3}
-  allignFirePos: 0.8
+  slash: {fileID: 0}
+  alignFirePos: 0
 --- !u!1001 &7458770672860006444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -509,6 +510,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f945f38b95ca91c4a9b620f60f78ff02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
   rotateSpeed: 0
   alignAngle: 0
