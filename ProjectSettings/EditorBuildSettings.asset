@@ -18,8 +18,11 @@ EditorBuildSettings:
     path: Assets/Scenes/test maps/waiting room.unity
     guid: 5cf0036b19040244db65b4ab2910f6b9
   - enabled: 1
-    path: Assets/Scenes/test maps/main map.unity
+    path: Assets/Scenes/test maps/main map 1.unity
     guid: da6614af19fdd8b4cb8f4da37b23f7da
+  - enabled: 1
+    path: Assets/Scenes/test maps/main map 2.unity
+    guid: 06b6f51e76a577f4581cb54bce7042e6
   - enabled: 1
     path: Assets/Scenes/test maps/end room.unity
     guid: 228d67fc5d4a80b41b8312e5f8a54b0c
