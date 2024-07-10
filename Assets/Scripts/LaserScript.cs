@@ -20,14 +20,21 @@ public class LaserScript : MonoBehaviour
         RaycastHit2D[] hits = Physics2D.RaycastAll(origin, dir)
         .Where(hit => hit.collider.name != "Confiner")
         .ToArray();
-        foreach (var hit in hits)
+        lineRenderer.SetPosition(1, hits.Last().point);
+        for (int i = 0; i < hits.Length - 1; i++)
         {
-            // TODO: hit enemies here
-            if (hit.collider.name == "walls")
+            // TODO: Damage enemies
+            if (hits[i].collider.name == "walls")
             {
-                GetComponent<LineRenderer>().SetPosition(1, hit.point);
+                lineRenderer.SetPosition(1, hits[i].point);
                 break;
             }
         }
+        Invoke(nameof(Explode), 0.2f);
+    }
+
+    void Explode()
+    {
+        Destroy(gameObject);
     }
 }
