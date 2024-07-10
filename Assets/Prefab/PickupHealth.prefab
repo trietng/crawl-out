@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6909275622335139942}
   - component: {fileID: 3903197016331954250}
   m_Layer: 0
-  m_Name: PickupItem
+  m_Name: PickupHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,7 +131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a71c92803e9d8a4ba0b744ca338f6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 0
 --- !u!61 &3903197016331954250
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -164,7 +163,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00057914853, y: 0.0020467713}
+  m_Offset: {x: 0.0006, y: 0.002}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -175,7 +174,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.21369639, y: 0.41177946}
+  m_Size: {x: 0.22, y: 0.42}
   m_EdgeRadius: 0
 --- !u!1 &5668685432429012092
 GameObject:

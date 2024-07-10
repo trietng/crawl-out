@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickupItemScript : MonoBehaviour
+public class PickupWeaponScript : MonoBehaviour
 {
-    public enum ItemType
-    {
-        Health,
-        Weapon
-    }
-
     private Transform itemTransform;
-
-    public ItemType itemType;
 
     void Start()
     {
@@ -20,19 +12,11 @@ public class PickupItemScript : MonoBehaviour
         StartCoroutine(PickupItemAnimation());
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            if (itemType == ItemType.Health)
-            {
-                // TODO: Add health to player
-            }
-            else if (itemType == ItemType.Weapon)
-            {
-                // TODO: Make player pick up weapon
-            }
+            
             Destroy(gameObject);
         }
     }
