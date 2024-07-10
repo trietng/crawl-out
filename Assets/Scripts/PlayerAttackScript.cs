@@ -45,7 +45,6 @@ namespace PlayerAttack
                 anim = GetComponent<Animator>();
                 mainCam = Camera.main;
                 fireMode = FireMode.Melee;
-                UpdateFireMode();
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -53,6 +52,12 @@ namespace PlayerAttack
                 Destroy(gameObject);
             }
         }
+
+        void Start()
+        {
+            UpdateFireMode();
+        }
+
         // Update is called once per frame
         void Update()
         {
@@ -115,12 +120,8 @@ namespace PlayerAttack
                     break;
             }
             bulletScript.ApplyColorFiler(fireMode);
-            // Weird bug where PlayerUIScript.Instance is null
-            if (PlayerUIScript.Instance != null) 
-            {
-                PlayerUIScript.Instance.UpdateBulletImage(fireMode);
-                PlayerUIScript.Instance.UpdateAudioClip(fireMode);
-            }
+            PlayerUIScript.Instance.UpdateBulletImage(fireMode);
+            PlayerUIScript.Instance.UpdateAudioClip(fireMode);
         }
         private void OnDrawGizmos()
         {

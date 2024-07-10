@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +17,13 @@ public class PickupHealthScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            
-            Destroy(gameObject);
+            int d = PlayerScript.Instance.maxHealth - PlayerScript.Instance.currentHealth;
+            if (d > 0)
+            {
+                PlayerScript.Instance.currentHealth += Math.Min(10, d);
+                PlayerUIScript.Instance.UpdateHealthText(PlayerScript.Instance.currentHealth);
+                Destroy(gameObject);
+            }
         }
     }
 

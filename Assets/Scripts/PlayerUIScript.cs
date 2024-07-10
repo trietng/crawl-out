@@ -6,6 +6,7 @@ public class PlayerUIScript : MonoBehaviour
 {
     private Image bulletImage;
     private AudioSource bulletAudio;
+    private Text healthText;
     [SerializeField] AudioClip pistolFireSound;
     [SerializeField] AudioClip shotgunFireSound;
     [SerializeField] AudioClip machineGunFireSound;
@@ -19,6 +20,7 @@ public class PlayerUIScript : MonoBehaviour
             Instance = this;
             bulletImage = GetComponentInChildren<Image>();
             bulletAudio = GetComponentInChildren<AudioSource>();
+            healthText = GetComponentInChildren<Text>();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -35,6 +37,12 @@ public class PlayerUIScript : MonoBehaviour
     public void UpdateBulletImage(PlayerAttack.FireMode fireMode)
     {
         bulletImage.sprite = GameManager.Instance.weaponSprites[(int)fireMode];
+    }
+
+    // Call this if you want to update the health text
+    public void UpdateHealthText(int health)
+    {
+        healthText.text = health.ToString();
     }
 
     public void UpdateAudioClip(PlayerAttack.FireMode fireMode)

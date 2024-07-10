@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
 
     public GameState State { get; private set; }
     public static Light2D globalLight;
-    public float bulletCount;
     [NonSerialized] public Sprite[] weaponSprites;
 
     public static event Action<GameState> OnGameStateChanged;

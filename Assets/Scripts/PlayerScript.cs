@@ -22,8 +22,8 @@ public class PlayerScript : MonoBehaviour
 
     public AudioSource audi { get; private set; }
     
-    private int maxHealth = 100;
-    private int currentHealth;
+    [NonSerialized] public readonly int maxHealth = 100;
+    [NonSerialized] public int currentHealth;
 
     public static PlayerScript Instance { get; private set; }
 
@@ -51,6 +51,7 @@ public class PlayerScript : MonoBehaviour
         anim.SetFloat("dirX", 0);
         anim.SetFloat("dirY", -1);
         audi.clip = footstepClip;
+        PlayerUIScript.Instance.UpdateHealthText(currentHealth);
     }
 
     // Update is called once per frame
@@ -99,6 +100,8 @@ public class PlayerScript : MonoBehaviour
             currentHealth = 0;
             PlayerDead();
         }
+
+        PlayerUIScript.Instance.UpdateHealthText(currentHealth);
     }
     
     public void PlayerDead()
