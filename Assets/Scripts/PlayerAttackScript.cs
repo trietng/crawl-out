@@ -10,7 +10,8 @@ namespace PlayerAttack
         Single,
         Burst,
         Spread,
-        Auto
+        Auto,
+        Laser
     }
     public class PlayerAttackScript : MonoBehaviour
     {
@@ -20,6 +21,7 @@ namespace PlayerAttack
         Animator anim;
         [SerializeField] GameObject bullet;
         [SerializeField] GameObject slash;
+        [SerializeField] GameObject laser;
         [SerializeField] float alignFirePos;
         private float fireTimer;
         private float fireCounter;
@@ -31,7 +33,8 @@ namespace PlayerAttack
             KeyCode.Alpha2,
             KeyCode.Alpha3,
             KeyCode.Alpha4,
-            KeyCode.Alpha5
+            KeyCode.Alpha5,
+            KeyCode.Alpha6
         };
         private FireMode fireMode;
         private int shotCount;
@@ -118,6 +121,10 @@ namespace PlayerAttack
                     bulletRange = 16f;
                     shotCount = 1;
                     break;
+                case FireMode.Laser:
+                    fireTimer = 0.5f;
+                    shotCount = 0;
+                    break;
             }
             bulletScript.ApplyColorFiler(fireMode);
             PlayerUIScript.Instance.UpdateBulletImage(fireMode);
@@ -156,6 +163,12 @@ namespace PlayerAttack
                     Quaternion.identity);
                 StartCoroutine(GameManager.Instance.TempRemoveCollider(_slash, 0.1f));
                 _slash.GetComponent<SlashScript>().Fire(dir);
+            }
+            else if (fireMode == FireMode.Laser)
+            {
+                GameObject _laser = Instantiate(laser);
+                var origin = (Vector2)gameObject.transform.position + Vector2.up * alignFirePos + dir * 0.8f;
+                _laser.GetComponent<LaserScript>().Fire(origin, dir);
             }
             else
             {

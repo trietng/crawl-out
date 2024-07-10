@@ -377,7 +377,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 682835529597806224, guid: 6a4e646626510254f8c2c11a0f42396c, type: 3}
-  slash: {fileID: 0}
+  slash: {fileID: 2807934967481645018, guid: 951ce3798ef95a249929f1e281de2009, type: 3}
+  laser: {fileID: 2807934967481645018, guid: 75d170ed86648d447921f04499b0468c, type: 3}
   alignFirePos: 0
 --- !u!1001 &7458770672860006444
 PrefabInstance:
@@ -387,6 +388,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5301521423944454937}
     m_Modifications:
+    - target: {fileID: 2477808052154793348, guid: 885ffcb1bfc902b438885c4d1f848931, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2477808052154793348, guid: 885ffcb1bfc902b438885c4d1f848931, type: 3}
       propertyPath: m_ShadowIntensity
       value: 1
@@ -479,8 +484,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 133.35
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1858700052299049718, guid: 885ffcb1bfc902b438885c4d1f848931, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -505,7 +509,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3605207396825082636}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f945f38b95ca91c4a9b620f60f78ff02, type: 3}
   m_Name: 
