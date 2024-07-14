@@ -31328,6 +31328,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pause
       objectReference: {fileID: 0}
+    - target: {fileID: 714331531054783948, guid: 3ebbf95e093718b47bc872e501537d3a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2034509562053387871, guid: 3ebbf95e093718b47bc872e501537d3a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
