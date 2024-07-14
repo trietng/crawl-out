@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletScript : MonoBehaviour
@@ -8,6 +9,7 @@ public class BulletScript : MonoBehaviour
     Vector2 currPos;
     [SerializeField] float alignAngle;
     [SerializeField] AudioClip reloadBulletClip;
+
     private void Awake()
     {
         isFire = false;
@@ -54,17 +56,29 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        CollisionAction();
+        bool hit = true;
+        if (collision.gameObject.CompareTag("Bullet") || collision.gameObject.CompareTag("Player"))
+        {
+            hit = false;
+        }
+        if (hit)
+        {   
+            CollisionAction();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        bool hit = false;
+        bool hit = true;
+        if (collision.gameObject.CompareTag("PlayerBound") || collision.gameObject.CompareTag("PickupItem") || collision.gameObject.name.CompareTo("Confiner") == 0)
+        {
+            hit = false;
+        }
         if (collision.gameObject.CompareTag("Zombie"))
         {
             var zombieScript = collision.gameObject.transform.parent.GetComponent<ZombieScript>();
             hit = !zombieScript.isDead;
-            zombieScript.TakeDamage(10); // Adjust damage amount as needed
+            zombieScript.TakeDamage(10);
         }
         if (hit)
         {

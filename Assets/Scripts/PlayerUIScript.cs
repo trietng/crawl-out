@@ -10,6 +10,7 @@ public class PlayerUIScript : MonoBehaviour
     [SerializeField] AudioClip pistolFireSound;
     [SerializeField] AudioClip shotgunFireSound;
     [SerializeField] AudioClip machineGunFireSound;
+    [SerializeField] AudioClip laserFireSound;
 
     public static PlayerUIScript Instance { get; private set; }
 
@@ -59,6 +60,10 @@ public class PlayerUIScript : MonoBehaviour
             case PlayerAttack.FireMode.Auto:
                 bulletAudio.clip = machineGunFireSound;
                 break;
+            case PlayerAttack.FireMode.Laser:
+                bulletAudio.clip = laserFireSound;
+                break;
+
         }
     }
 

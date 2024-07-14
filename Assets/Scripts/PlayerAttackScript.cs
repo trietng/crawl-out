@@ -161,14 +161,14 @@ namespace PlayerAttack
                     slash,
                     (Vector2)gameObject.transform.position + Vector2.up * alignFirePos + dir * 1.25f,
                     Quaternion.identity);
-                StartCoroutine(GameManager.Instance.TempRemoveCollider(_slash, 0.1f));
                 _slash.GetComponent<SlashScript>().Fire(dir);
             }
             else if (fireMode == FireMode.Laser)
             {
                 GameObject _laser = Instantiate(laser);
                 var origin = (Vector2)gameObject.transform.position + Vector2.up * alignFirePos + dir * 0.8f;
-                _laser.GetComponent<LaserScript>().Fire(origin, dir);
+                _laser.GetComponent<LaserScript>().Fire(origin, dir, 3);
+                PlayerUIScript.Instance.PlayFireSound(dir);
             }
             else
             {
@@ -187,7 +187,6 @@ namespace PlayerAttack
                             curDir = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-5, 5)) * curDir;
                             break;
                     }
-                    StartCoroutine(GameManager.Instance.TempRemoveCollider(_bullet, 0.05f));
                     _bullet.GetComponent<BulletScript>().Fire(curDir, bulletSpeed, bulletRange);
                     PlayerUIScript.Instance.PlayFireSound(curDir);
                     if (fireMode == FireMode.Burst)

@@ -10,6 +10,8 @@ TagManager:
   - UI_InScene
   - UI_Bullet
   - ExitAnchor
+  - Bullet
+  - PickupItem
   layers:
   - Default
   - TransparentFX

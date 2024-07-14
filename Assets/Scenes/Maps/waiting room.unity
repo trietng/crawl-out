@@ -180,6 +180,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lighting
       objectReference: {fileID: 0}
+    - target: {fileID: 2114554152339446894, guid: 1eb87c0b48a819f4e9ad304fea2394b2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2963694733368404585, guid: 1eb87c0b48a819f4e9ad304fea2394b2, type: 3}
       propertyPath: m_Intensity
       value: 1
@@ -952,6 +956,7 @@ MonoBehaviour:
   pistolFireSound: {fileID: 8300000, guid: 1b779de011fe6674c9bb749bcb8aac1a, type: 3}
   shotgunFireSound: {fileID: 8300000, guid: eb04544ea73d7ee4aa0a7abc668fad05, type: 3}
   machineGunFireSound: {fileID: 8300000, guid: efc00af7f151fe84a87a79a47862753d, type: 3}
+  laserFireSound: {fileID: 8300000, guid: ed2161d68fd2f084889ba4528ad78887, type: 3}
 --- !u!114 &819091365
 MonoBehaviour:
   m_ObjectHideFlags: 0

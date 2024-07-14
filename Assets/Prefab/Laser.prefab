@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb0dbfbf4b1e3d84686c8cbefd13a5b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightSpot: {fileID: 8200324512697635537, guid: ebcfefd9b31f9e043b4e6626051c83fd, type: 3}
 --- !u!120 &3349422524515733370
 LineRenderer:
   serializedVersion: 2
@@ -89,7 +90,7 @@ LineRenderer:
   m_SortingOrder: 99
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 10, y: 0, z: 0}
+  - {x: 2, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
