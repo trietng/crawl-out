@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class BulletScript : MonoBehaviour
 {
@@ -28,17 +29,24 @@ public class BulletScript : MonoBehaviour
     public void ApplyColorFiler(PlayerAttack.FireMode fireMode)
     {
         var spriteRenderer = GetComponent<SpriteRenderer>();
+        var light = GetComponent<Light2D>();
         switch (fireMode)
         {
             case PlayerAttack.FireMode.Single:
+                spriteRenderer.color = Color.magenta;
+                light.color = Color.magenta;
+                break;
             case PlayerAttack.FireMode.Burst:
-                spriteRenderer.color = Color.red;
+                spriteRenderer.color = Color.green;
+                light.color = Color.green;
                 break;
             case PlayerAttack.FireMode.Spread:
-                spriteRenderer.color = Color.green;
+                spriteRenderer.color = Color.red;
+                light.color = Color.red;
                 break;
             case PlayerAttack.FireMode.Auto:
                 spriteRenderer.color = Color.yellow;
+                light.color = Color.yellow;
                 break;
         }
     }
