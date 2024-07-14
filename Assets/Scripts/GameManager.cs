@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
     {
         Destroy(PlayerScript.Instance.gameObject);
         Destroy(PlayerUIScript.Instance.gameObject);
-        Destroy(gameObject);
+        // Destroy(gameObject);
     }
 
 }
