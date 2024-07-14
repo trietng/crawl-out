@@ -1,11 +1,13 @@
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class PlayerUIScript : MonoBehaviour
 {
-    private Image bulletImage;
-    private AudioSource bulletAudio;
+    private Image weaponImage;
+    private AudioSource weaponAudioSource;
     private Text healthText;
     [SerializeField] AudioClip pistolFireSound;
     [SerializeField] AudioClip shotgunFireSound;
@@ -19,8 +21,9 @@ public class PlayerUIScript : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            bulletImage = GetComponentInChildren<Image>();
-            bulletAudio = GetComponentInChildren<AudioSource>();
+            var images = GetComponentsInChildren<Image>();
+            weaponImage = images.Where(x => x.name == "WeaponImage").FirstOrDefault();
+            weaponAudioSource = GetComponentInChildren<AudioSource>();
             healthText = GetComponentInChildren<Text>();
             DontDestroyOnLoad(gameObject);
         }
@@ -37,7 +40,7 @@ public class PlayerUIScript : MonoBehaviour
 
     public void UpdateBulletImage(PlayerAttack.FireMode fireMode)
     {
-        bulletImage.sprite = GameManager.Instance.weaponSprites[(int)fireMode];
+        weaponImage.sprite = GameManager.Instance.weaponSprites[(int)fireMode];
     }
 
     // Call this if you want to update the health text
@@ -52,16 +55,16 @@ public class PlayerUIScript : MonoBehaviour
         {
             case PlayerAttack.FireMode.Single:
             case PlayerAttack.FireMode.Burst:
-                bulletAudio.clip = pistolFireSound;
+                weaponAudioSource.clip = pistolFireSound;
                 break;
             case PlayerAttack.FireMode.Spread:
-                bulletAudio.clip = shotgunFireSound;
+                weaponAudioSource.clip = shotgunFireSound;
                 break;
             case PlayerAttack.FireMode.Auto:
-                bulletAudio.clip = machineGunFireSound;
+                weaponAudioSource.clip = machineGunFireSound;
                 break;
             case PlayerAttack.FireMode.Laser:
-                bulletAudio.clip = laserFireSound;
+                weaponAudioSource.clip = laserFireSound;
                 break;
 
         }
@@ -69,8 +72,8 @@ public class PlayerUIScript : MonoBehaviour
 
     internal void PlayFireSound(Vector2 dir)
     {
-        if (dir.x > 0) bulletAudio.panStereo = 0.65f;
-        else bulletAudio.panStereo = -0.65f;
-        bulletAudio.Play();
+        if (dir.x > 0) weaponAudioSource.panStereo = 0.65f;
+        else weaponAudioSource.panStereo = -0.65f;
+        weaponAudioSource.Play();
     }
 }

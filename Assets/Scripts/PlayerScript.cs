@@ -61,6 +61,7 @@ public class PlayerScript : MonoBehaviour
         ver = Input.GetAxisRaw("Vertical");
         anim.SetBool("isMoving", (hor != 0 || ver != 0) && IsAlive());
     }
+    
     private void FixedUpdate()
     {
         if (anim.GetBool("isMoving"))
