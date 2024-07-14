@@ -39,19 +39,18 @@ public class GameManager : MonoBehaviour
             case GameState.Nor:
                 break;
             case GameState.Win:
-                PlayerWin();
+                // TODO: Implement the Win method
                 break;
             case GameState.Dead:
+                // Find the EndingHandlerScript object in the scene
+                var endingHandler = FindObjectOfType<EndingHandlerScript>();
+                // Call the Die method
+                endingHandler.Die();
                 break;
             default:
                 break;
         }
         OnGameStateChanged?.Invoke(_state);
-    }
-
-    void PlayerWin()
-    {
-        Time.timeScale = 0;
     }
 
     public enum GameState
@@ -89,7 +88,7 @@ public class GameManager : MonoBehaviour
     // Do not use this method
     public IEnumerator TurnOffLight()
     {
-        for (int i = 0; i < 10; i++ )
+        for (int i = 0; i < 5; i++ )
         {
             globalLight.intensity -= 0.1f;
             yield return new WaitForSeconds(0.2f);
@@ -100,7 +99,7 @@ public class GameManager : MonoBehaviour
     {
         Destroy(PlayerScript.Instance.gameObject);
         Destroy(PlayerUIScript.Instance.gameObject);
-        // Destroy(gameObject);
+        Destroy(gameObject);
     }
 
 }

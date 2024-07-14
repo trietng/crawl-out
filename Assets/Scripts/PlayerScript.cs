@@ -22,7 +22,7 @@ public class PlayerScript : MonoBehaviour
 
     public AudioSource audi { get; private set; }
     
-    [NonSerialized] public readonly int maxHealth = 100;
+    [SerializeField] public int maxHealth;
     [NonSerialized] public int currentHealth;
 
     public static PlayerScript Instance { get; private set; }
@@ -106,7 +106,7 @@ public class PlayerScript : MonoBehaviour
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         gameObject.GetComponentInChildren<CapsuleCollider2D>().enabled = false;
-        gameObject.GetComponentInChildren<Light2D>().intensity = 0;
+        GameManager.Instance.TurnOffLight();
         anim.SetTrigger("isDead");
         GameManager.Instance.PlaySound(gameOverClip);
         speed = 0;

@@ -21,9 +21,7 @@ public class LaserScript : MonoBehaviour
         lineRenderer.SetPosition(0, origin);
         for (int i = 0; i < reflectCount; ++i) {
             // Ignore the Confiner object
-            RaycastHit2D[] hits = Physics2D.RaycastAll(origin, dir, 1000)
-            .Where(hit => hit.collider.name != "Confiner")
-            .ToArray();
+            RaycastHit2D[] hits = Physics2D.RaycastAll(origin, dir, 1000);
             if (hits.Length == 0) {
                 continue;
             }

@@ -196,6 +196,7 @@ MonoBehaviour:
   bullet: {fileID: 682835529597806224, guid: 6a4e646626510254f8c2c11a0f42396c, type: 3}
   footstepClip: {fileID: 8300000, guid: ee139bdd2d7e9274d95fed7dddbecad0, type: 3}
   gameOverClip: {fileID: 8300000, guid: 5bb2efdb551ab894781b3a78de1f9ab7, type: 3}
+  maxHealth: 100
 --- !u!50 &5301521423944454938
 Rigidbody2D:
   serializedVersion: 4

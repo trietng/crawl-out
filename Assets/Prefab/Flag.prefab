@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2718577343076895234}
   - component: {fileID: 477554315863628640}
   m_Layer: 0
-  m_Name: flag01
+  m_Name: Flag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
