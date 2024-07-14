@@ -29,8 +29,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
     }
+
     public void UpdateGameState(GameState _state)
     {
         State = _state;
@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
         }
         OnGameStateChanged?.Invoke(_state);
     }
+
     void PlayerWin()
     {
         Time.timeScale = 0;
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
 		Win,
 		Dead
 	}
+    
     public void StartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -67,10 +69,12 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
     public void PlaySound(AudioClip _audiclip)
     {
         GetComponent<AudioSource>().PlayOneShot(_audiclip);
     }
+
     public IEnumerator TempRemoveCollider(GameObject coll, float sec)
     {
         coll.GetComponent<BoxCollider2D>().enabled = false;

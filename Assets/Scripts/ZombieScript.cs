@@ -215,6 +215,6 @@ public class ZombieScript : MonoBehaviour
 
     void AttackPlayer()
     {
-        player.GetComponent<PlayerScript>().PlayerDead();
+        player.GetComponent<PlayerScript>().Die();
     }
 }

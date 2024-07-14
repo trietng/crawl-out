@@ -19,6 +19,6 @@ public class SpearScript : MonoBehaviour
         {
             yield return new WaitForSeconds(spearTime);
         }
-        obj.transform.parent.GetComponent<PlayerScript>().PlayerDead();
+        obj.transform.parent.GetComponent<PlayerScript>().Die();
     }
 }

@@ -57,11 +57,9 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         hor = Input.GetAxisRaw("Horizontal");
         ver = Input.GetAxisRaw("Vertical");
         anim.SetBool("isMoving", (hor != 0 || ver != 0) && IsAlive());
-
     }
     private void FixedUpdate()
     {
@@ -98,13 +96,13 @@ public class PlayerScript : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            PlayerDead();
+            Die();
         }
 
         PlayerUIScript.Instance.UpdateHealthText(currentHealth);
     }
     
-    public void PlayerDead()
+    public void Die()
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         gameObject.GetComponentInChildren<CapsuleCollider2D>().enabled = false;
@@ -114,10 +112,5 @@ public class PlayerScript : MonoBehaviour
         speed = 0;
         StartCoroutine(GameManager.Instance.TurnOffLight());
         GameManager.Instance.UpdateGameState(GameManager.GameState.Dead);
-        Invoke("ReloadSceneWhenPlayerDead", 3f);
-    }
-    public void ReloadSceneWhenPlayerDead()
-    {
-        GameManager.Instance.ReloadScene();
     }
 }
