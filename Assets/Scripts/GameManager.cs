@@ -95,4 +95,12 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
     }
+
+    public void DestroyAll()
+    {
+        Destroy(PlayerScript.Instance.gameObject);
+        Destroy(PlayerUIScript.Instance.gameObject);
+        Destroy(gameObject);
+    }
+
 }

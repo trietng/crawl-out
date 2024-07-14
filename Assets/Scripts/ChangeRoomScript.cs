@@ -25,6 +25,8 @@ public class ChangeRoomScript : MonoBehaviour
 
     static void OnLoadedCallback(Scene scene, LoadSceneMode mode)
     {
+        if (scene.buildIndex == 0)
+            return;
         // Find the player object
         var player = GameObject.FindGameObjectWithTag("Player");
         // Get current main camera
