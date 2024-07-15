@@ -13,6 +13,7 @@ TagManager:
   - Bullet
   - HealthItem
   - WeaponItem
+  - Key
   layers:
   - Default
   - TransparentFX
