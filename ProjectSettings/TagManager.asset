@@ -11,7 +11,8 @@ TagManager:
   - UI_Bullet
   - ExitAnchor
   - Bullet
-  - PickupItem
+  - HealthItem
+  - WeaponItem
   layers:
   - Default
   - TransparentFX

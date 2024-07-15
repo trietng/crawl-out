@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 3903197016331954250}
   m_Layer: 0
   m_Name: PickupHealth
-  m_TagString: PickupItem
+  m_TagString: HealthItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

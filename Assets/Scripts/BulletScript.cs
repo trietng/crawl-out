@@ -11,12 +11,12 @@ public class BulletScript : MonoBehaviour
     [SerializeField] float alignAngle;
     [SerializeField] AudioClip reloadBulletClip;
 
-    private void Awake()
+    void Awake()
     {
         isFire = false;
     }
 
-    private void Update()
+    void Update()
     {
         if (isFire)
         {
@@ -26,27 +26,26 @@ public class BulletScript : MonoBehaviour
             transform.position = currPos;
         }
     }
-    public void ApplyColorFiler(PlayerAttack.FireMode fireMode)
-    {
+    public void ApplyColorFiler(WeaponScript.WeaponType weapon) {
         var spriteRenderer = GetComponent<SpriteRenderer>();
-        var light = GetComponent<Light2D>();
-        switch (fireMode)
+        var light2D = GetComponent<Light2D>();
+        switch (weapon)
         {
-            case PlayerAttack.FireMode.Single:
+            case WeaponScript.WeaponType.Single:
                 spriteRenderer.color = Color.magenta;
-                light.color = Color.magenta;
+                light2D.color = Color.magenta;
                 break;
-            case PlayerAttack.FireMode.Burst:
+            case WeaponScript.WeaponType.Burst:
                 spriteRenderer.color = Color.green;
-                light.color = Color.green;
+                light2D.color = Color.green;
                 break;
-            case PlayerAttack.FireMode.Spread:
+            case WeaponScript.WeaponType.Spread:
                 spriteRenderer.color = Color.red;
-                light.color = Color.red;
+                light2D.color = Color.red;
                 break;
-            case PlayerAttack.FireMode.Auto:
+            case WeaponScript.WeaponType.Auto:
                 spriteRenderer.color = Color.yellow;
-                light.color = Color.yellow;
+                light2D.color = Color.yellow;
                 break;
         }
     }
@@ -78,7 +77,7 @@ public class BulletScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         bool hit = true;
-        if (collision.gameObject.CompareTag("PlayerBound") || collision.gameObject.CompareTag("PickupItem") || collision.gameObject.name.CompareTo("Confiner") == 0)
+        if (collision.gameObject.CompareTag("PlayerBound") || collision.gameObject.tag.EndsWith("Item") || collision.gameObject.name.CompareTo("Confiner") == 0)
         {
             hit = false;
         }

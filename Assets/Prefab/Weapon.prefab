@@ -96,8 +96,8 @@ GameObject:
   - component: {fileID: 3903197016331954250}
   - component: {fileID: 5396177519880735514}
   m_Layer: 0
-  m_Name: PickupWeapon
-  m_TagString: PickupItem
+  m_Name: Weapon
+  m_TagString: WeaponItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9bce16dbc9da2428dc0c6cca921a05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponType: 1
 --- !u!1 &5668685432429012092
 GameObject:
   m_ObjectHideFlags: 0

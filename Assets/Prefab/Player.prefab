@@ -381,6 +381,7 @@ MonoBehaviour:
   slash: {fileID: 2807934967481645018, guid: 951ce3798ef95a249929f1e281de2009, type: 3}
   laser: {fileID: 2807934967481645018, guid: 75d170ed86648d447921f04499b0468c, type: 3}
   alignFirePos: 0
+  weaponPrefab: {fileID: 4519231144150731051, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
 --- !u!1001 &7458770672860006444
 PrefabInstance:
   m_ObjectHideFlags: 0

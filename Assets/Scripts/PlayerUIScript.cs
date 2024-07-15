@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class PlayerUIScript : MonoBehaviour
 {
-    private Image weaponImage;
+    private Image weaponRangedImage;
+    private Image weaponLaserImage;
+    private Image weaponSelectionImage;
     private AudioSource weaponAudioSource;
     private Text healthText;
     [SerializeField] AudioClip pistolFireSound;
@@ -16,13 +18,17 @@ public class PlayerUIScript : MonoBehaviour
 
     public static PlayerUIScript Instance { get; private set; }
 
+    private static float[] weaponSelectionPosXOffsets = new float[] { 32, 254, 354 };
+
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
             var images = GetComponentsInChildren<Image>();
-            weaponImage = images.Where(x => x.name == "WeaponImage").FirstOrDefault();
+            weaponLaserImage = images.Where(x => x.name == "WeaponLaserImage").FirstOrDefault();
+            weaponRangedImage = images.Where(x => x.name == "WeaponRangedImage").FirstOrDefault();
+            weaponSelectionImage = images.Where(x => x.name == "WeaponSelectionImage").FirstOrDefault();
             weaponAudioSource = GetComponentInChildren<AudioSource>();
             healthText = GetComponentInChildren<Text>();
             DontDestroyOnLoad(gameObject);
@@ -38,9 +44,10 @@ public class PlayerUIScript : MonoBehaviour
 
     }
 
-    public void UpdateBulletImage(PlayerAttack.FireMode fireMode)
+    public void ChangeWeaponSelection(int currentWeaponIndex)
     {
-        weaponImage.sprite = GameManager.Instance.weaponSprites[(int)fireMode];
+        // weaponRangedImage.sprite = GameManager.Instance.weaponSprites[];
+        weaponSelectionImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(weaponSelectionPosXOffsets[currentWeaponIndex], weaponSelectionImage.rectTransform.anchoredPosition.y);
     }
 
     // Call this if you want to update the health text
@@ -49,24 +56,24 @@ public class PlayerUIScript : MonoBehaviour
         healthText.text = health.ToString();
     }
 
-    public void UpdateAudioClip(PlayerAttack.FireMode fireMode)
+    public void UpdateAudioClip(WeaponScript.WeaponType weapon)
     {
-        switch (fireMode)
+        switch (weapon)
         {
-            case PlayerAttack.FireMode.Single:
-            case PlayerAttack.FireMode.Burst:
+            case WeaponScript.WeaponType.Single:
                 weaponAudioSource.clip = pistolFireSound;
                 break;
-            case PlayerAttack.FireMode.Spread:
+            case WeaponScript.WeaponType.Burst:
                 weaponAudioSource.clip = shotgunFireSound;
                 break;
-            case PlayerAttack.FireMode.Auto:
+            case WeaponScript.WeaponType.Auto:
                 weaponAudioSource.clip = machineGunFireSound;
                 break;
-            case PlayerAttack.FireMode.Laser:
+            case WeaponScript.WeaponType.LaserI:
+            case WeaponScript.WeaponType.LaserII:
+            case WeaponScript.WeaponType.LaserIII:
                 weaponAudioSource.clip = laserFireSound;
                 break;
-
         }
     }
 

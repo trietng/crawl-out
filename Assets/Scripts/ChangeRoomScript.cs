@@ -33,7 +33,7 @@ public class ChangeRoomScript : MonoBehaviour
         var mainCam = Camera.main;
 
         PlayerScript.Instance.mainCam = mainCam;
-        PlayerAttack.PlayerAttackScript.Instance.mainCam = mainCam;
+        PlayerAttackScript.Instance.mainCam = mainCam;
         GameManager.globalLight = GameObject.Find("Lighting").GetComponent<Light2D>();
 
         // Find the virtual camera object

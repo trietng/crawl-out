@@ -1,19 +1,9 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
-namespace PlayerAttack
-{
-    public enum FireMode
-    {
-        Melee,
-        Single,
-        Burst,
-        Spread,
-        Auto,
-        Laser
-    }
-    public class PlayerAttackScript : MonoBehaviour
+public class PlayerAttackScript : MonoBehaviour
     {
 
         [NonSerialized] public Camera mainCam;
@@ -31,13 +21,14 @@ namespace PlayerAttack
         private static readonly KeyCode[] fireModeKeys = {
             KeyCode.Alpha1,
             KeyCode.Alpha2,
-            KeyCode.Alpha3,
-            KeyCode.Alpha4,
-            KeyCode.Alpha5,
-            KeyCode.Alpha6
+            KeyCode.Alpha3
         };
-        private FireMode fireMode;
-        private int shotCount;
+
+        public GameObject weaponPrefab;
+
+        private GameObject[] weapons = new GameObject[3];
+
+        [NonSerialized] public int currentWeaponIndex;
         public static PlayerAttackScript Instance { get; private set; }
 
         private void Awake()
@@ -47,7 +38,15 @@ namespace PlayerAttack
                 Instance = this;
                 anim = GetComponent<Animator>();
                 mainCam = Camera.main;
-                fireMode = FireMode.Melee;
+                currentWeaponIndex = 1;
+                for (int i = 0; i < weapons.Length; i++)
+                {
+                    weapons[i] = Instantiate(weaponPrefab, transform);
+                    weapons[i].GetComponent<WeaponScript>().MakeInventory();
+                }
+                weapons[0].GetComponent<WeaponScript>().weaponType = WeaponScript.WeaponType.None;
+                weapons[1].GetComponent<WeaponScript>().weaponType = WeaponScript.WeaponType.Melee;
+                weapons[2].GetComponent<WeaponScript>().weaponType = WeaponScript.WeaponType.LaserI;
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -58,7 +57,36 @@ namespace PlayerAttack
 
         void Start()
         {
-            UpdateFireMode();
+            ChangeWeapon();
+        }
+
+        void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("WeaponItem"))
+            {
+                var weaponScript = collision.gameObject.GetComponent<WeaponScript>();
+                var weaponType = weaponScript.weaponType;
+                if (weaponType.ToString().StartsWith("Laser"))
+                {
+                    WeaponScript.SwapWeapon(weapons[2], collision.gameObject);
+                    if (weaponScript.weaponType == WeaponScript.WeaponType.None)
+                    {
+                        Destroy(collision.gameObject);
+                    }
+                }
+                else
+                {
+                    WeaponScript.SwapWeapon(weapons[0], collision.gameObject);
+                    if (weaponScript.weaponType == WeaponScript.WeaponType.None)
+                    {
+                        var script = weapons[0].GetComponent<WeaponScript>();
+                        print($"{script.gameObject.name} {script.gameObject.tag} {script.ammoCount} {script.damage} {script.shotCount} {script.weaponType}");
+                        Destroy(collision.gameObject);
+                    }
+                    
+                }
+                ChangeWeapon();
+            }
         }
 
         // Update is called once per frame
@@ -68,17 +96,23 @@ namespace PlayerAttack
             {
                 if (Input.GetKeyDown(key))
                 {
-                    fireMode = (FireMode)(key - KeyCode.Alpha1);
-                    UpdateFireMode();
+                    currentWeaponIndex = key - KeyCode.Alpha1;
+                    ChangeWeapon();
                 }
             }
-            bool keyEvent = fireMode == FireMode.Auto ? Input.GetKey(KeyCode.Mouse0) : Input.GetKeyDown(KeyCode.Mouse0);
-            if (keyEvent)
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                currentWeaponIndex = (currentWeaponIndex + 1) % weapons.Length;
+                ChangeWeapon();
+            }
+            WeaponScript.WeaponType weapon = weapons[currentWeaponIndex].GetComponent<WeaponScript>().weaponType;
+            bool keyEvent = weapon == WeaponScript.WeaponType.Auto ? Input.GetKey(KeyCode.Mouse0) : Input.GetKeyDown(KeyCode.Mouse0);
+            if (keyEvent && weapon != WeaponScript.WeaponType.None)
             {
                 if (fireCounter > fireTimer && gameObject.GetComponent<PlayerScript>().IsAlive())
                 {
                     currMousePoint = mainCam.ScreenToWorldPoint(Input.mousePosition);
-                    if (fireMode != FireMode.Melee)
+                    if (weapon != WeaponScript.WeaponType.Melee)
                     {
                         anim.SetTrigger("isShooting");
                     }
@@ -88,47 +122,42 @@ namespace PlayerAttack
             }
             fireCounter += Time.deltaTime;
         }
-        private void UpdateFireMode()
+        private void ChangeWeapon()
         {
             var bulletScript = bullet.GetComponent<BulletScript>();
-            switch (fireMode)
+            var weaponType = weapons[currentWeaponIndex].GetComponent<WeaponScript>().weaponType;
+            switch (weaponType)
             {
-                case FireMode.Melee:
+                case WeaponScript.WeaponType.Melee:
                     fireTimer = 0.4f;
-                    shotCount = 0;
                     break;
-                case FireMode.Single:
+                case WeaponScript.WeaponType.Single:
                     fireTimer = 0.5f;
                     bulletSpeed = 40f;
                     bulletRange = 12f;
-                    shotCount = 1;
                     break;
-                case FireMode.Burst:
+                case WeaponScript.WeaponType.Burst:
                     fireTimer = 0.5f;
                     bulletSpeed = 20f;
                     bulletRange = 12f;
-                    shotCount = 2;
                     break;
-                case FireMode.Spread:
+                case WeaponScript.WeaponType.Spread:
                     fireTimer = 0.5f;
                     bulletSpeed = 30f;
                     bulletRange = 8f;
-                    shotCount = 3;
                     break;
-                case FireMode.Auto:
+                case WeaponScript.WeaponType.Auto:
                     fireTimer = 0.15f;
                     bulletSpeed = 20f;
                     bulletRange = 16f;
-                    shotCount = 1;
                     break;
-                case FireMode.Laser:
+                case WeaponScript.WeaponType.LaserI:
                     fireTimer = 0.5f;
-                    shotCount = 0;
                     break;
             }
-            bulletScript.ApplyColorFiler(fireMode);
-            PlayerUIScript.Instance.UpdateBulletImage(fireMode);
-            PlayerUIScript.Instance.UpdateAudioClip(fireMode);
+            bulletScript.ApplyColorFiler(weaponType);
+            PlayerUIScript.Instance.UpdateAudioClip(weaponType);
+            PlayerUIScript.Instance.ChangeWeaponSelection(currentWeaponIndex);
         }
         private void OnDrawGizmos()
         {
@@ -155,7 +184,9 @@ namespace PlayerAttack
             // StartCoroutine(GameManager._instance.TempRemoveCollider(gameObject, 0.1f));
             // StartCoroutine(tempSlowPlayer(0.1f));
             // GameManager._instance.TempRemoveCollider(gameObject, 3f);
-            if (fireMode == FireMode.Melee)
+            var weapon = weapons[currentWeaponIndex].GetComponent<WeaponScript>();
+            var weaponType = weapon.weaponType;
+            if (weaponType == WeaponScript.WeaponType.Melee)
             {
                 GameObject _slash = Instantiate(
                     slash,
@@ -163,7 +194,7 @@ namespace PlayerAttack
                     Quaternion.identity);
                 _slash.GetComponent<SlashScript>().Fire(dir);
             }
-            else if (fireMode == FireMode.Laser)
+            else if (weaponType.ToString().StartsWith("Laser"))
             {
                 GameObject _laser = Instantiate(laser);
                 var origin = (Vector2)gameObject.transform.position + Vector2.up * alignFirePos + dir * 0.8f;
@@ -172,24 +203,24 @@ namespace PlayerAttack
             }
             else
             {
-                for (int i = 0; i < shotCount; i++)
+                for (int i = 0; i < weapon.shotCount; i++)
                 {
                     var curDir = dir;
                     GameObject _bullet = Instantiate(bullet, (Vector2)gameObject.transform.position + Vector2.up * alignFirePos + curDir * 0.8f, Quaternion.identity);
-                    switch (fireMode)
+                    switch (weaponType)
                     {
-                        case FireMode.Spread:
+                        case WeaponScript.WeaponType.Spread:
                             curDir = Quaternion.Euler(0, 0, (i - 1) * 10) * curDir;
                             break;
-                        case FireMode.Burst:
+                        case WeaponScript.WeaponType.Burst:
                             break;
-                        case FireMode.Auto:
+                        case WeaponScript.WeaponType.Auto:
                             curDir = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-5, 5)) * curDir;
                             break;
                     }
                     _bullet.GetComponent<BulletScript>().Fire(curDir, bulletSpeed, bulletRange);
                     PlayerUIScript.Instance.PlayFireSound(curDir);
-                    if (fireMode == FireMode.Burst)
+                    if (weaponType == WeaponScript.WeaponType.Burst)
                     {
                         // delay between shots
                         yield return new WaitForSeconds(0.2f);
@@ -208,4 +239,3 @@ namespace PlayerAttack
             playerScript.speed = playerScript.maxSpeed;
         }
     }
-}
