@@ -18,7 +18,7 @@ public class PlayerUIScript : MonoBehaviour
 
     public static PlayerUIScript Instance { get; private set; }
 
-    private static float[] weaponSelectionPosXOffsets = new float[] { 32, 254, 354 };
+    private static float[] weaponSelectionPosXOffsets = new float[] { 32, 254, 342 };
 
     void Awake()
     {
@@ -48,6 +48,27 @@ public class PlayerUIScript : MonoBehaviour
     {
         // weaponRangedImage.sprite = GameManager.Instance.weaponSprites[];
         weaponSelectionImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(weaponSelectionPosXOffsets[currentWeaponIndex], weaponSelectionImage.rectTransform.anchoredPosition.y);
+    }
+
+    public void UpdateWeaponImage(WeaponScript.WeaponType weaponType)
+    {
+        var newSprite = GameManager.Instance.weaponSprites[(int)weaponType - 1];
+        print(newSprite.name);
+        switch (weaponType)
+        {
+            case WeaponScript.WeaponType.Single:
+            case WeaponScript.WeaponType.Burst:
+            case WeaponScript.WeaponType.Spread:
+            case WeaponScript.WeaponType.Auto:
+                weaponRangedImage.sprite = newSprite;
+                weaponRangedImage.color = Color.white;
+                break;
+            case WeaponScript.WeaponType.LaserI:
+            // case WeaponScript.WeaponType.LaserII:
+            // case WeaponScript.WeaponType.LaserIII:
+                weaponLaserImage.sprite = newSprite;
+                break;
+        }
     }
 
     // Call this if you want to update the health text

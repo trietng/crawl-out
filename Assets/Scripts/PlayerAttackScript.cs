@@ -69,6 +69,7 @@ public class PlayerAttackScript : MonoBehaviour
                 if (weaponType.ToString().StartsWith("Laser"))
                 {
                     WeaponScript.SwapWeapon(weapons[2], collision.gameObject);
+                    PlayerUIScript.Instance.UpdateWeaponImage(weaponType);
                     if (weaponScript.weaponType == WeaponScript.WeaponType.None)
                     {
                         Destroy(collision.gameObject);
@@ -77,10 +78,9 @@ public class PlayerAttackScript : MonoBehaviour
                 else
                 {
                     WeaponScript.SwapWeapon(weapons[0], collision.gameObject);
+                    PlayerUIScript.Instance.UpdateWeaponImage(weaponType);
                     if (weaponScript.weaponType == WeaponScript.WeaponType.None)
                     {
-                        var script = weapons[0].GetComponent<WeaponScript>();
-                        print($"{script.gameObject.name} {script.gameObject.tag} {script.ammoCount} {script.damage} {script.shotCount} {script.weaponType}");
                         Destroy(collision.gameObject);
                     }
                     
@@ -112,7 +112,7 @@ public class PlayerAttackScript : MonoBehaviour
                 if (fireCounter > fireTimer && gameObject.GetComponent<PlayerScript>().IsAlive())
                 {
                     currMousePoint = mainCam.ScreenToWorldPoint(Input.mousePosition);
-                    if (weapon != WeaponScript.WeaponType.Melee)
+                    if (weapon != WeaponScript.WeaponType.Melee && weapon != WeaponScript.WeaponType.None)
                     {
                         anim.SetTrigger("isShooting");
                     }
@@ -152,6 +152,8 @@ public class PlayerAttackScript : MonoBehaviour
                     bulletRange = 16f;
                     break;
                 case WeaponScript.WeaponType.LaserI:
+                case WeaponScript.WeaponType.LaserII:
+                case WeaponScript.WeaponType.LaserIII:
                     fireTimer = 0.5f;
                     break;
             }
@@ -198,7 +200,7 @@ public class PlayerAttackScript : MonoBehaviour
             {
                 GameObject _laser = Instantiate(laser);
                 var origin = (Vector2)gameObject.transform.position + Vector2.up * alignFirePos + dir * 0.8f;
-                _laser.GetComponent<LaserScript>().Fire(origin, dir, 3);
+                _laser.GetComponent<LaserScript>().Fire(origin, dir, weapon.shotCount);
                 PlayerUIScript.Instance.PlayFireSound(dir);
             }
             else

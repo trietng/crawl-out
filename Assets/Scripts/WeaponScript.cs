@@ -30,6 +30,13 @@ public class WeaponScript : MonoBehaviour
 
     void Start()
     {
+        UpdateDataState();
+        itemTransform = transform.GetChild(0).transform;
+        StartCoroutine(PickupItemAnimation());
+    }
+
+    void UpdateDataState()
+    {
         switch (weaponType)
         {
             case WeaponType.Melee:
@@ -58,19 +65,21 @@ public class WeaponScript : MonoBehaviour
                 shotCount = 1;
                 break;
             case WeaponType.LaserI:
+                ammoCount = 0;
+                damage = 1;
+                shotCount = 1;
+                break;
             case WeaponType.LaserII:
             case WeaponType.LaserIII:
                 ammoCount = 100;
                 damage = 5;
-                shotCount = 0;
+                shotCount = 5;
                 break;
         }
         if (weaponType != WeaponType.None)
         {
             transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.Instance.weaponSprites[(int)weaponType - 1];
         }
-        itemTransform = transform.GetChild(0).transform;
-        StartCoroutine(PickupItemAnimation());
     }
 
     public void MakeInventory()

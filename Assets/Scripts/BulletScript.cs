@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -10,6 +11,11 @@ public class BulletScript : MonoBehaviour
     Vector2 currPos;
     [SerializeField] float alignAngle;
     [SerializeField] AudioClip reloadBulletClip;
+    private static readonly HashSet<string> onTriggerEnterTagsWhitelist = new() {
+        "PlayerBound",
+        "Door",
+        "Key"
+    };
 
     void Awake()
     {
@@ -77,7 +83,7 @@ public class BulletScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         bool hit = true;
-        if (collision.gameObject.CompareTag("PlayerBound") || collision.gameObject.tag.EndsWith("Item") || collision.gameObject.name.CompareTo("Confiner") == 0)
+        if (onTriggerEnterTagsWhitelist.Contains(collision.gameObject.tag) || collision.gameObject.tag.EndsWith("Item") || collision.gameObject.name.CompareTo("Confiner") == 0)
         {
             hit = false;
         }
