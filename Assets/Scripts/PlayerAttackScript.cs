@@ -216,11 +216,12 @@ public class PlayerAttackScript : MonoBehaviour
             var weaponType = weapon.weaponType;
             if (WeaponScript.weaponGroups[WeaponScript.WeaponGroup.Ranged].Contains(weaponType))
             {
-                if (weapon.ammoCount < weapon.shotCount)
+                if (weapon.ammoCount == 0)
                 {
+                    PlayerUIScript.Instance.PlayFireSound(dir, true);
                     yield break;
                 }
-                weapon.ammoCount -= weapon.shotCount;
+                weapon.ammoCount--;
                 PlayerUIScript.Instance.UpdateAmmoText(weapon.ammoCount);
             }
             if (weaponType != WeaponScript.WeaponType.Melee && weaponType != WeaponScript.WeaponType.None)

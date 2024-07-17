@@ -126,6 +126,7 @@ MonoBehaviour:
   shotgunFireSound: {fileID: 8300000, guid: eb04544ea73d7ee4aa0a7abc668fad05, type: 3}
   machineGunFireSound: {fileID: 8300000, guid: efc00af7f151fe84a87a79a47862753d, type: 3}
   laserFireSound: {fileID: 8300000, guid: ed2161d68fd2f084889ba4528ad78887, type: 3}
+  outOfAmmoSound: {fileID: 8300000, guid: 86d99db051f63f14ca9253e1f7cb29d6, type: 3}
 --- !u!1 &1220235753566997175
 GameObject:
   m_ObjectHideFlags: 0

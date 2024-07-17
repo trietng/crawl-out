@@ -33,6 +33,26 @@ public class WeaponScript : MonoBehaviour
         {WeaponGroup.Laser, new HashSet<WeaponType> {WeaponType.LaserI, WeaponType.LaserII, WeaponType.LaserIII}}  
     };
 
+    public struct WeaponStats
+    {
+        public int ammoCount;
+        public int damage;
+        public int shotCount;
+    }
+
+    private static Dictionary<WeaponType, WeaponStats> weaponStats = new()
+    {
+        {WeaponType.None, new WeaponStats {ammoCount = 0, damage = 0, shotCount = 0}},
+        {WeaponType.Melee, new WeaponStats {ammoCount = 0, damage = 10, shotCount = 0}},
+        {WeaponType.Single, new WeaponStats {ammoCount = 10, damage = 10, shotCount = 1}},
+        {WeaponType.Burst, new WeaponStats {ammoCount = 10, damage = 7, shotCount = 2}},
+        {WeaponType.Spread, new WeaponStats {ammoCount = 6, damage = 6, shotCount = 3}},
+        {WeaponType.Auto, new WeaponStats {ammoCount = 24, damage = 3, shotCount = 1}},
+        {WeaponType.LaserI, new WeaponStats {ammoCount = 0, damage = 1, shotCount = 1}},
+        {WeaponType.LaserII, new WeaponStats {ammoCount = 0, damage = 1, shotCount = 3}},
+        {WeaponType.LaserIII, new WeaponStats {ammoCount = 0, damage = 1, shotCount = 5}}
+    };
+
     private Transform itemTransform;
     public bool animate = true;
 
@@ -44,7 +64,7 @@ public class WeaponScript : MonoBehaviour
 
     void Awake()
     {
-        UpdateDataState();
+        UpdateWeaponStats();
     }
 
     void Start()
@@ -57,52 +77,11 @@ public class WeaponScript : MonoBehaviour
         StartCoroutine(PickupItemAnimation());
     }
 
-    public void UpdateDataState()
+    public void UpdateWeaponStats()
     {
-        switch (weaponType)
-        {
-            case WeaponType.Melee:
-                ammoCount = 0;
-                damage = 10;
-                shotCount = 0;
-                break;
-            case WeaponType.Single:
-                ammoCount = 10;
-                damage = 10;
-                shotCount = 1;
-                break;
-            case WeaponType.Burst:
-                ammoCount = 12;
-                damage = 7;
-                shotCount = 2;
-                break;
-            case WeaponType.Spread:
-                ammoCount = 6;
-                damage = 6;
-                shotCount = 3;
-                break;
-            case WeaponType.Auto:
-                ammoCount = 24;
-                damage = 3;
-                shotCount = 1;
-                break;
-            case WeaponType.LaserI:
-                ammoCount = 0;
-                damage = 1;
-                shotCount = 1;
-                break;
-            case WeaponType.LaserII:
-                ammoCount = 0;
-                damage = 1;
-                shotCount = 3;
-                break;
-            case WeaponType.LaserIII:
-                ammoCount = 100;
-                damage = 1;
-                shotCount = 5;
-                break;
-        }
-        
+        ammoCount = weaponStats[weaponType].ammoCount;
+        damage = weaponStats[weaponType].damage;
+        shotCount = weaponStats[weaponType].shotCount;
     }
 
     public void MakeInventory()

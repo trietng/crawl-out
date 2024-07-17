@@ -17,6 +17,7 @@ public class PlayerUIScript : MonoBehaviour
     [SerializeField] AudioClip shotgunFireSound;
     [SerializeField] AudioClip machineGunFireSound;
     [SerializeField] AudioClip laserFireSound;
+    [SerializeField] AudioClip outOfAmmoSound;
 
     public static PlayerUIScript Instance { get; private set; }
 
@@ -109,10 +110,17 @@ public class PlayerUIScript : MonoBehaviour
         }
     }
 
-    internal void PlayFireSound(Vector2 dir)
+    internal void PlayFireSound(Vector2 dir, bool isOutOfAmmo = false)
     {
-        if (dir.x > 0) weaponAudioSource.panStereo = 0.65f;
-        else weaponAudioSource.panStereo = -0.65f;
+        if (isOutOfAmmo)
+        {
+            weaponAudioSource.clip = outOfAmmoSound;
+            weaponAudioSource.panStereo = 0;
+        }
+        else {
+            if (dir.x > 0) weaponAudioSource.panStereo = 0.65f;
+            else weaponAudioSource.panStereo = -0.65f;
+        }  
         weaponAudioSource.Play();
     }
 }
