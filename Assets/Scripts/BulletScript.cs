@@ -32,7 +32,8 @@ public class BulletScript : MonoBehaviour
             transform.position = currPos;
         }
     }
-    public void ApplyColorFiler(WeaponScript.WeaponType weapon) {
+    public void ApplyColorFiler(WeaponScript.WeaponType weapon)
+    {
         var spriteRenderer = GetComponent<SpriteRenderer>();
         var light2D = GetComponent<Light2D>();
         switch (weapon)

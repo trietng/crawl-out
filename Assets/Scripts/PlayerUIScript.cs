@@ -95,6 +95,9 @@ public class PlayerUIScript : MonoBehaviour
             case WeaponScript.WeaponType.Burst:
                 weaponAudioSource.clip = shotgunFireSound;
                 break;
+            case WeaponScript.WeaponType.Spread:
+                weaponAudioSource.clip = shotgunFireSound;
+                break;
             case WeaponScript.WeaponType.Auto:
                 weaponAudioSource.clip = machineGunFireSound;
                 break;

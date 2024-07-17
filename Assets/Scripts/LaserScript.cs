@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -7,6 +8,33 @@ public class LaserScript : MonoBehaviour
 {
     private LineRenderer lineRenderer;
     public GameObject lightSpot;
+
+    private static readonly Color orange = new(255, 165, 0);
+
+    private static readonly Dictionary<WeaponScript.WeaponType, Gradient> gradients = new()
+    {
+        {
+            WeaponScript.WeaponType.LaserI, 
+            new Gradient()
+            {
+                colorKeys = new GradientColorKey[] { new(Color.blue, 1.0f) }
+            }
+        },
+        {
+            WeaponScript.WeaponType.LaserII, 
+            new Gradient()
+            {
+                colorKeys = new GradientColorKey[] { new(orange, 1.0f) }
+            }
+        },
+        {
+            WeaponScript.WeaponType.LaserIII, 
+            new Gradient()
+            {
+                colorKeys = new GradientColorKey[] { new(Color.white, 1.0f) }
+            }
+        }
+    };
 
     void Awake()
     {
@@ -42,7 +70,7 @@ public class LaserScript : MonoBehaviour
                 }
             }
             lineRenderer.SetPosition(i + 1, destination.point);
-            // Instantiate a light spot at the destination
+            // Instantiate a light spot at the destination point
             Instantiate(lightSpot, destination.point, Quaternion.identity, gameObject.transform);
             origin = new Vector2(destination.point.x, destination.point.y);
             dir = Vector2.Reflect(dir, destination.normal);
@@ -50,6 +78,26 @@ public class LaserScript : MonoBehaviour
             origin += dir * 0.01f;
         }
         Invoke(nameof(Explode), 0.2f * reflectCount);
+    }
+
+    public void ApplyColorFiler(WeaponScript.WeaponType weapon)
+    {
+        var lineRenderer = GetComponent<LineRenderer>();
+        switch (weapon)
+        {
+            case WeaponScript.WeaponType.LaserI:
+                lineRenderer.colorGradient = gradients[WeaponScript.WeaponType.LaserI];
+                lightSpot.GetComponent<Light2D>().color = Color.blue;
+                break;
+            case WeaponScript.WeaponType.LaserII:
+                lineRenderer.colorGradient = gradients[WeaponScript.WeaponType.LaserII];
+                lightSpot.GetComponent<Light2D>().color = orange;
+                break;
+            case WeaponScript.WeaponType.LaserIII:
+                lineRenderer.colorGradient = gradients[WeaponScript.WeaponType.LaserIII];
+                lightSpot.GetComponent<Light2D>().color = Color.white;
+                break;
+        }
     }
 
     void Explode()

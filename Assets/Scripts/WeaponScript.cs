@@ -34,7 +34,7 @@ public class WeaponScript : MonoBehaviour
     };
 
     private Transform itemTransform;
-    private bool animate = true;
+    public bool animate = true;
 
     [NonSerialized] public int ammoCount;
     [NonSerialized] public int damage;
@@ -92,9 +92,13 @@ public class WeaponScript : MonoBehaviour
                 shotCount = 1;
                 break;
             case WeaponType.LaserII:
+                ammoCount = 0;
+                damage = 1;
+                shotCount = 3;
+                break;
             case WeaponType.LaserIII:
                 ammoCount = 100;
-                damage = 5;
+                damage = 1;
                 shotCount = 5;
                 break;
         }
@@ -103,7 +107,6 @@ public class WeaponScript : MonoBehaviour
 
     public void MakeInventory()
     {
-        animate = false;
         GetComponent<CircleCollider2D>().enabled = false;
         GetComponentsInChildren<SpriteRenderer>().ToList().ForEach(x => x.enabled = false);
     }

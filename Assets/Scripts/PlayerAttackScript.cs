@@ -28,7 +28,7 @@ public class PlayerAttackScript : MonoBehaviour
 
         public GameObject weaponPrefab;
 
-        private readonly GameObject[] weapons = new GameObject[3];
+        public GameObject[] weapons = new GameObject[3];
 
         [NonSerialized] public int currentWeaponIndex;
         public static PlayerAttackScript Instance { get; private set; }
@@ -41,18 +41,6 @@ public class PlayerAttackScript : MonoBehaviour
                 anim = GetComponent<Animator>();
                 mainCam = Camera.main;
                 currentWeaponIndex = 1;
-                for (int i = 0; i < weapons.Length; i++)
-                {
-                    weapons[i] = Instantiate(weaponPrefab, transform);
-                    weapons[i].GetComponent<WeaponScript>().MakeInventory();
-                }
-                weapons[0].GetComponent<WeaponScript>().weaponType = WeaponScript.WeaponType.None;
-                weapons[1].GetComponent<WeaponScript>().weaponType = WeaponScript.WeaponType.Melee;
-                weapons[2].GetComponent<WeaponScript>().weaponType = WeaponScript.WeaponType.LaserI;
-                foreach (var weapon in weapons)
-                {
-                    weapon.GetComponent<WeaponScript>().UpdateDataState();
-                }
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -68,12 +56,18 @@ public class PlayerAttackScript : MonoBehaviour
 
         void OnTriggerStay2D(Collider2D collision)
         {
-            weaponGameObject = collision.gameObject;
+            if (collision.gameObject.CompareTag("WeaponItem"))
+            {
+                weaponGameObject = collision.gameObject;
+            }
         }
 
         void OnTriggerExit2D(Collider2D collision)
         {
-            weaponGameObject = null;
+            if (collision.gameObject.CompareTag("WeaponItem"))
+            {
+                weaponGameObject = null;
+            }
         }
 
         // Update is called once per frame
@@ -95,21 +89,18 @@ public class PlayerAttackScript : MonoBehaviour
             }
             if (weaponGameObject != null && Input.GetKeyDown(KeyCode.Mouse1))
             {
-                if (weaponGameObject.CompareTag("WeaponItem"))
+                var weaponScript = weaponGameObject.GetComponent<WeaponScript>();
+                var weaponType = weaponScript.weaponType;
+                GameObject oldWeapon = weaponType.ToString().StartsWith("Laser") ? weapons[2] : weapons[0];
+                var oldWeaponScript = oldWeapon.GetComponent<WeaponScript>();
+                WeaponScript.SwapWeapon(oldWeapon, weaponGameObject); 
+                PlayerUIScript.Instance.UpdateWeaponImage(weaponType);
+                PlayerUIScript.Instance.UpdateAmmoText(oldWeaponScript.ammoCount);
+                if (weaponScript.weaponType == WeaponScript.WeaponType.None)
                 {
-                    var weaponScript = weaponGameObject.GetComponent<WeaponScript>();
-                    var weaponType = weaponScript.weaponType;
-                    GameObject oldWeapon = weaponType.ToString().StartsWith("Laser") ? weapons[2] : weapons[0];
-                    var oldWeaponScript = oldWeapon.GetComponent<WeaponScript>();
-                    WeaponScript.SwapWeapon(oldWeapon, weaponGameObject); 
-                    PlayerUIScript.Instance.UpdateWeaponImage(weaponType);
-                    PlayerUIScript.Instance.UpdateAmmoText(oldWeaponScript.ammoCount);
-                    if (weaponScript.weaponType == WeaponScript.WeaponType.None)
-                    {
-                        Destroy(weaponGameObject);
-                    }
-                    ChangeWeapon();
+                    Destroy(weaponGameObject);
                 }
+                ChangeWeapon();
             }
             WeaponScript.WeaponType weapon = weapons[currentWeaponIndex].GetComponent<WeaponScript>().weaponType;
             bool keyEvent = weapon == WeaponScript.WeaponType.Auto ? Input.GetKey(KeyCode.Mouse0) : Input.GetKeyDown(KeyCode.Mouse0);
@@ -159,6 +150,7 @@ public class PlayerAttackScript : MonoBehaviour
         private void ChangeWeapon()
         {
             var bulletScript = bullet.GetComponent<BulletScript>();
+            var laserScript = laser.GetComponent<LaserScript>();
             var weapon = weapons[currentWeaponIndex].GetComponent<WeaponScript>();
             var weaponType = weapon.weaponType;
             switch (weaponType)
@@ -170,29 +162,39 @@ public class PlayerAttackScript : MonoBehaviour
                     fireTimer = 0.5f;
                     bulletSpeed = 40f;
                     bulletRange = 12f;
+                    bulletScript.ApplyColorFiler(weaponType);
                     break;
                 case WeaponScript.WeaponType.Burst:
                     fireTimer = 0.5f;
                     bulletSpeed = 20f;
                     bulletRange = 12f;
+                    bulletScript.ApplyColorFiler(weaponType);
                     break;
                 case WeaponScript.WeaponType.Spread:
                     fireTimer = 0.5f;
                     bulletSpeed = 30f;
                     bulletRange = 8f;
+                    bulletScript.ApplyColorFiler(weaponType);
                     break;
                 case WeaponScript.WeaponType.Auto:
                     fireTimer = 0.15f;
                     bulletSpeed = 20f;
                     bulletRange = 16f;
+                    bulletScript.ApplyColorFiler(weaponType);
                     break;
                 case WeaponScript.WeaponType.LaserI:
+                    laserScript.ApplyColorFiler(weaponType);
+                    fireTimer = 0.5f;
+                    break;
                 case WeaponScript.WeaponType.LaserII:
+                    laserScript.ApplyColorFiler(weaponType);
+                    fireTimer = 0.5f;
+                    break;
                 case WeaponScript.WeaponType.LaserIII:
+                    laserScript.ApplyColorFiler(weaponType);
                     fireTimer = 0.5f;
                     break;
             }
-            bulletScript.ApplyColorFiler(weaponType);
             PlayerUIScript.Instance.UpdateAudioClip(weaponType);
             PlayerUIScript.Instance.ChangeWeaponSelection(currentWeaponIndex);
         }
