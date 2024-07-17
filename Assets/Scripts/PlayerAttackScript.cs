@@ -24,6 +24,8 @@ public class PlayerAttackScript : MonoBehaviour
             KeyCode.Alpha3
         };
 
+        private CapsuleCollider2D playerBound;
+
         private GameObject weaponGameObject;
 
         public GameObject weaponPrefab;
@@ -41,6 +43,7 @@ public class PlayerAttackScript : MonoBehaviour
                 anim = GetComponent<Animator>();
                 mainCam = Camera.main;
                 currentWeaponIndex = 1;
+                playerBound = GetComponentInChildren<CapsuleCollider2D>();
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -109,6 +112,10 @@ public class PlayerAttackScript : MonoBehaviour
                 if (fireCounter > fireTimer && gameObject.GetComponent<PlayerScript>().IsAlive())
                 {
                     currMousePoint = mainCam.ScreenToWorldPoint(Input.mousePosition);
+                    if (playerBound.OverlapPoint(currMousePoint))
+                    {
+                        return;
+                    }
                     StartCoroutine(Attack(currMousePoint - ((Vector2)gameObject.transform.position + Vector2.up * alignFirePos)));
                     fireCounter = 0;
                 }
