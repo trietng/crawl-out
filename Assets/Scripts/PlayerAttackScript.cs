@@ -24,9 +24,11 @@ public class PlayerAttackScript : MonoBehaviour
             KeyCode.Alpha3
         };
 
+        private GameObject weaponGameObject;
+
         public GameObject weaponPrefab;
 
-        private GameObject[] weapons = new GameObject[3];
+        private readonly GameObject[] weapons = new GameObject[3];
 
         [NonSerialized] public int currentWeaponIndex;
         public static PlayerAttackScript Instance { get; private set; }
@@ -47,6 +49,10 @@ public class PlayerAttackScript : MonoBehaviour
                 weapons[0].GetComponent<WeaponScript>().weaponType = WeaponScript.WeaponType.None;
                 weapons[1].GetComponent<WeaponScript>().weaponType = WeaponScript.WeaponType.Melee;
                 weapons[2].GetComponent<WeaponScript>().weaponType = WeaponScript.WeaponType.LaserI;
+                foreach (var weapon in weapons)
+                {
+                    weapon.GetComponent<WeaponScript>().UpdateDataState();
+                }
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -60,50 +66,50 @@ public class PlayerAttackScript : MonoBehaviour
             ChangeWeapon();
         }
 
-        void OnTriggerEnter2D(Collider2D collision)
+        void OnTriggerStay2D(Collider2D collision)
         {
-            if (collision.gameObject.CompareTag("WeaponItem"))
-            {
-                var weaponScript = collision.gameObject.GetComponent<WeaponScript>();
-                var weaponType = weaponScript.weaponType;
-                if (weaponType.ToString().StartsWith("Laser"))
-                {
-                    WeaponScript.SwapWeapon(weapons[2], collision.gameObject);
-                    PlayerUIScript.Instance.UpdateWeaponImage(weaponType);
-                    if (weaponScript.weaponType == WeaponScript.WeaponType.None)
-                    {
-                        Destroy(collision.gameObject);
-                    }
-                }
-                else
-                {
-                    WeaponScript.SwapWeapon(weapons[0], collision.gameObject);
-                    PlayerUIScript.Instance.UpdateWeaponImage(weaponType);
-                    if (weaponScript.weaponType == WeaponScript.WeaponType.None)
-                    {
-                        Destroy(collision.gameObject);
-                    }
-                    
-                }
-                ChangeWeapon();
-            }
+            weaponGameObject = collision.gameObject;
+        }
+
+        void OnTriggerExit2D(Collider2D collision)
+        {
+            weaponGameObject = null;
         }
 
         // Update is called once per frame
         void Update()
         {
+            int newWeaponIndex;
             foreach (KeyCode key in fireModeKeys)
             {
-                if (Input.GetKeyDown(key))
+                if (HandleChangeInput(key, out newWeaponIndex))
                 {
-                    currentWeaponIndex = key - KeyCode.Alpha1;
+                    currentWeaponIndex = newWeaponIndex;
                     ChangeWeapon();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (HandleChangeInput(KeyCode.Tab, out newWeaponIndex))
             {
-                currentWeaponIndex = (currentWeaponIndex + 1) % weapons.Length;
+                currentWeaponIndex = newWeaponIndex;
                 ChangeWeapon();
+            }
+            if (weaponGameObject != null && Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                if (weaponGameObject.CompareTag("WeaponItem"))
+                {
+                    var weaponScript = weaponGameObject.GetComponent<WeaponScript>();
+                    var weaponType = weaponScript.weaponType;
+                    GameObject oldWeapon = weaponType.ToString().StartsWith("Laser") ? weapons[2] : weapons[0];
+                    var oldWeaponScript = oldWeapon.GetComponent<WeaponScript>();
+                    WeaponScript.SwapWeapon(oldWeapon, weaponGameObject); 
+                    PlayerUIScript.Instance.UpdateWeaponImage(weaponType);
+                    PlayerUIScript.Instance.UpdateAmmoText(oldWeaponScript.ammoCount);
+                    if (weaponScript.weaponType == WeaponScript.WeaponType.None)
+                    {
+                        Destroy(weaponGameObject);
+                    }
+                    ChangeWeapon();
+                }
             }
             WeaponScript.WeaponType weapon = weapons[currentWeaponIndex].GetComponent<WeaponScript>().weaponType;
             bool keyEvent = weapon == WeaponScript.WeaponType.Auto ? Input.GetKey(KeyCode.Mouse0) : Input.GetKeyDown(KeyCode.Mouse0);
@@ -112,20 +118,49 @@ public class PlayerAttackScript : MonoBehaviour
                 if (fireCounter > fireTimer && gameObject.GetComponent<PlayerScript>().IsAlive())
                 {
                     currMousePoint = mainCam.ScreenToWorldPoint(Input.mousePosition);
-                    if (weapon != WeaponScript.WeaponType.Melee && weapon != WeaponScript.WeaponType.None)
-                    {
-                        anim.SetTrigger("isShooting");
-                    }
                     StartCoroutine(Attack(currMousePoint - ((Vector2)gameObject.transform.position + Vector2.up * alignFirePos)));
                     fireCounter = 0;
                 }
             }
             fireCounter += Time.deltaTime;
         }
+
+        private bool HandleChangeInput(KeyCode key, out int newWeaponIndex)
+        {
+            bool shouldChange = false;
+            if (Input.GetKeyDown(key))
+            {
+                if (key == KeyCode.Tab)
+                {
+                    newWeaponIndex = (currentWeaponIndex + 1) % weapons.Length;
+                    shouldChange = weapons[newWeaponIndex].GetComponent<WeaponScript>().weaponType != WeaponScript.WeaponType.None;
+                    if (!shouldChange)
+                    {
+                        int index = weapons.Length - weapons.Skip(newWeaponIndex + 1).SkipWhile(w => w.GetComponent<WeaponScript>().weaponType == WeaponScript.WeaponType.None).Count();
+                        if (index != weapons.Length)
+                        {
+                            newWeaponIndex = index;
+                            shouldChange = true;
+                        }
+                    }
+                }
+                else {
+                    newWeaponIndex = key - KeyCode.Alpha1;
+                    shouldChange = weapons[newWeaponIndex].GetComponent<WeaponScript>().weaponType != WeaponScript.WeaponType.None;
+                }
+            }
+            else
+            {
+                newWeaponIndex = -1;
+            }
+            return shouldChange;
+        }
+
         private void ChangeWeapon()
         {
             var bulletScript = bullet.GetComponent<BulletScript>();
-            var weaponType = weapons[currentWeaponIndex].GetComponent<WeaponScript>().weaponType;
+            var weapon = weapons[currentWeaponIndex].GetComponent<WeaponScript>();
+            var weaponType = weapon.weaponType;
             switch (weaponType)
             {
                 case WeaponScript.WeaponType.Melee:
@@ -168,9 +203,21 @@ public class PlayerAttackScript : MonoBehaviour
         }
         IEnumerator Attack(Vector2 dir)
         {
-            // if (GameManager.Instance.bulletCount < shotCount) yield break;
-            // GameManager.Instance.bulletCount -= shotCount;
-            // BulletUIScript.Instance.UpdateBulletCountText();
+            var weapon = weapons[currentWeaponIndex].GetComponent<WeaponScript>();
+            var weaponType = weapon.weaponType;
+            if (WeaponScript.weaponGroups[WeaponScript.WeaponGroup.Ranged].Contains(weaponType))
+            {
+                if (weapon.ammoCount < weapon.shotCount)
+                {
+                    yield break;
+                }
+                weapon.ammoCount -= weapon.shotCount;
+                PlayerUIScript.Instance.UpdateAmmoText(weapon.ammoCount);
+            }
+            if (weaponType != WeaponScript.WeaponType.Melee && weaponType != WeaponScript.WeaponType.None)
+            {
+                anim.SetTrigger("isShooting");
+            }
             if (dir.magnitude > 1) dir.Normalize();
             float angle = Vector2.Angle(Vector2.right, dir) < 90 ? Vector2.Angle(Vector2.right, dir) : 180 - Vector2.Angle(Vector2.right, dir);
             if (angle < 45)
@@ -186,8 +233,6 @@ public class PlayerAttackScript : MonoBehaviour
             // StartCoroutine(GameManager._instance.TempRemoveCollider(gameObject, 0.1f));
             // StartCoroutine(tempSlowPlayer(0.1f));
             // GameManager._instance.TempRemoveCollider(gameObject, 3f);
-            var weapon = weapons[currentWeaponIndex].GetComponent<WeaponScript>();
-            var weaponType = weapon.weaponType;
             if (weaponType == WeaponScript.WeaponType.Melee)
             {
                 GameObject _slash = Instantiate(
@@ -196,8 +241,9 @@ public class PlayerAttackScript : MonoBehaviour
                     Quaternion.identity);
                 _slash.GetComponent<SlashScript>().Fire(dir);
             }
-            else if (weaponType.ToString().StartsWith("Laser"))
+            else if (WeaponScript.weaponGroups[WeaponScript.WeaponGroup.Laser].Contains(weaponType))
             {
+                print(weapon.shotCount);
                 GameObject _laser = Instantiate(laser);
                 var origin = (Vector2)gameObject.transform.position + Vector2.up * alignFirePos + dir * 0.8f;
                 _laser.GetComponent<LaserScript>().Fire(origin, dir, weapon.shotCount);
@@ -229,15 +275,5 @@ public class PlayerAttackScript : MonoBehaviour
                     }
                 }
             }
-        }
-        IEnumerator tempSlowPlayer(float sec)
-        {
-            var playerScript = GetComponent<PlayerScript>();
-            playerScript.speed = 0;
-            for (int i = 0; i < 1; i++)
-            {
-                yield return new WaitForSeconds(sec);
-            }
-            playerScript.speed = playerScript.maxSpeed;
         }
     }

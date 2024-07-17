@@ -19,6 +19,20 @@ public class WeaponScript : MonoBehaviour
         LaserIII
     }
 
+    public enum WeaponGroup
+    {
+        Melee,
+        Ranged,
+        Laser
+    }
+
+    public static readonly Dictionary<WeaponGroup, HashSet<WeaponType>> weaponGroups = new()
+    {
+        {WeaponGroup.Melee, new HashSet<WeaponType> {WeaponType.Melee}},
+        {WeaponGroup.Ranged, new HashSet<WeaponType> {WeaponType.Single, WeaponType.Burst, WeaponType.Spread, WeaponType.Auto}},
+        {WeaponGroup.Laser, new HashSet<WeaponType> {WeaponType.LaserI, WeaponType.LaserII, WeaponType.LaserIII}}  
+    };
+
     private Transform itemTransform;
     private bool animate = true;
 
@@ -28,14 +42,22 @@ public class WeaponScript : MonoBehaviour
 
     public WeaponType weaponType;
 
-    void Start()
+    void Awake()
     {
         UpdateDataState();
+    }
+
+    void Start()
+    {
+        if (weaponType != WeaponType.None)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.Instance.weaponSprites[(int)weaponType - 1];
+        }
         itemTransform = transform.GetChild(0).transform;
         StartCoroutine(PickupItemAnimation());
     }
 
-    void UpdateDataState()
+    public void UpdateDataState()
     {
         switch (weaponType)
         {
@@ -76,16 +98,13 @@ public class WeaponScript : MonoBehaviour
                 shotCount = 5;
                 break;
         }
-        if (weaponType != WeaponType.None)
-        {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.Instance.weaponSprites[(int)weaponType - 1];
-        }
+        
     }
 
     public void MakeInventory()
     {
         animate = false;
-        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<CircleCollider2D>().enabled = false;
         GetComponentsInChildren<SpriteRenderer>().ToList().ForEach(x => x.enabled = false);
     }
 
@@ -99,7 +118,7 @@ public class WeaponScript : MonoBehaviour
         }
     }
 
-    internal static void SwapWeapon(GameObject oldWeapon, GameObject newWeapon)
+    public static void SwapWeapon(GameObject oldWeapon, GameObject newWeapon)
     {
         var oldWeaponScript = oldWeapon.GetComponent<WeaponScript>();
         var newWeaponScript = newWeapon.GetComponent<WeaponScript>();
@@ -107,5 +126,9 @@ public class WeaponScript : MonoBehaviour
         (oldWeaponScript.shotCount, newWeaponScript.shotCount) = (newWeaponScript.shotCount, oldWeaponScript.shotCount);
         (oldWeaponScript.damage, newWeaponScript.damage) = (newWeaponScript.damage, oldWeaponScript.damage);
         (oldWeaponScript.ammoCount, newWeaponScript.ammoCount) = (newWeaponScript.ammoCount, oldWeaponScript.ammoCount);
+        if (newWeaponScript.weaponType != WeaponType.None)
+        {
+            newWeaponScript.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.Instance.weaponSprites[(int)newWeaponScript.weaponType - 1];
+        }
     }
 }

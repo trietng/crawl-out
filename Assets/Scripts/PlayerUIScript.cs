@@ -11,6 +11,8 @@ public class PlayerUIScript : MonoBehaviour
     private Image weaponSelectionImage;
     private AudioSource weaponAudioSource;
     private Text healthText;
+    
+    private Text ammoText;
     [SerializeField] AudioClip pistolFireSound;
     [SerializeField] AudioClip shotgunFireSound;
     [SerializeField] AudioClip machineGunFireSound;
@@ -18,7 +20,7 @@ public class PlayerUIScript : MonoBehaviour
 
     public static PlayerUIScript Instance { get; private set; }
 
-    private static float[] weaponSelectionPosXOffsets = new float[] { 32, 254, 342 };
+    private static readonly float[] weaponSelectionPosXOffsets = new float[] { 32, 254, 342 };
 
     void Awake()
     {
@@ -30,7 +32,9 @@ public class PlayerUIScript : MonoBehaviour
             weaponRangedImage = images.Where(x => x.name == "WeaponRangedImage").FirstOrDefault();
             weaponSelectionImage = images.Where(x => x.name == "WeaponSelectionImage").FirstOrDefault();
             weaponAudioSource = GetComponentInChildren<AudioSource>();
-            healthText = GetComponentInChildren<Text>();
+            var texts = GetComponentsInChildren<Text>();
+            healthText = texts.Where(x => x.name == "HealthText").FirstOrDefault();
+            ammoText = texts.Where(x => x.name == "AmmoText").FirstOrDefault();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -53,7 +57,6 @@ public class PlayerUIScript : MonoBehaviour
     public void UpdateWeaponImage(WeaponScript.WeaponType weaponType)
     {
         var newSprite = GameManager.Instance.weaponSprites[(int)weaponType - 1];
-        print(newSprite.name);
         switch (weaponType)
         {
             case WeaponScript.WeaponType.Single:
@@ -75,6 +78,11 @@ public class PlayerUIScript : MonoBehaviour
     public void UpdateHealthText(int health)
     {
         healthText.text = health.ToString();
+    }
+
+    public void UpdateAmmoText(int ammo)
+    {
+        ammoText.text = ammo.ToString();
     }
 
     public void UpdateAudioClip(WeaponScript.WeaponType weapon)
