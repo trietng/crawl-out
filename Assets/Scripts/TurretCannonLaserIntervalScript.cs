@@ -11,17 +11,16 @@ public class TurretCannonLaserIntervalScript : MonoBehaviour
     private LaserScript laserScript;
     private Vector2 firingDirection;
     private Vector2 firingOrigin;
-    private static readonly float magicMultiplier = 0.5f;
 
     void Start()
     {
         var _laser = Instantiate(laser, transform);
         laserScript = _laser.GetComponent<LaserScript>();
-        laserScript.damage = 999;
-        laserScript.ApplyColorFiler(WeaponScript.WeaponType.LaserIII);
+        laserScript.damage = TurretCannonLaserScript.damage;
+        laserScript.ApplyColorFiler(WeaponScript.WeaponType.LaserIII);   
         // Calculate the firing direction from the turret's rotation
         firingDirection = gameObject.transform.rotation * Vector2.up;
-        firingOrigin = gameObject.transform.position.ConvertTo<Vector2>() + (firingDirection * magicMultiplier);
+        firingOrigin = gameObject.transform.position.ConvertTo<Vector2>() + (firingDirection * TurretCannonLaserScript.magicMultiplier);
         StartCoroutine(CyclingFire());
     }
 
