@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class BulletScript : MonoBehaviour
     Vector2 currPos;
     [SerializeField] float alignAngle;
     [SerializeField] AudioClip reloadBulletClip;
+    
+    [NonSerialized] public int damage;
     private static readonly HashSet<string> onTriggerEnterTagsWhitelist = new() {
         "PlayerBound",
         "Door",
@@ -75,6 +78,11 @@ public class BulletScript : MonoBehaviour
         {
             hit = false;
         }
+        if (collision.gameObject.CompareTag("Turret"))
+        {
+            var turretBaseScript = collision.gameObject.GetComponent<TurretBaseScript>();
+            turretBaseScript.TakeDamage(damage);
+        }
         if (hit)
         {   
             CollisionAction();
@@ -92,7 +100,7 @@ public class BulletScript : MonoBehaviour
         {
             var zombieScript = collision.gameObject.transform.parent.GetComponent<ZombieScript>();
             hit = !zombieScript.isDead;
-            zombieScript.TakeDamage(10);
+            zombieScript.TakeDamage(damage);
         }
         if (hit)
         {

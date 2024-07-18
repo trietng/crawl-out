@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9bce16dbc9da2428dc0c6cca921a05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animate: 1
   weaponType: 1
 --- !u!58 &3478915919810897602
 CircleCollider2D:

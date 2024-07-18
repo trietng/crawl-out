@@ -40,7 +40,7 @@ public class WeaponScript : MonoBehaviour
         public int shotCount;
     }
 
-    private static Dictionary<WeaponType, WeaponStats> weaponStats = new()
+    public static readonly Dictionary<WeaponType, WeaponStats> weaponStats = new()
     {
         {WeaponType.None, new WeaponStats {ammoCount = 0, damage = 0, shotCount = 0}},
         {WeaponType.Melee, new WeaponStats {ammoCount = 0, damage = 10, shotCount = 0}},

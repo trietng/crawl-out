@@ -15,6 +15,7 @@ TagManager:
   - WeaponItem
   - Key
   - Door
+  - Turret
   layers:
   - Default
   - TransparentFX

@@ -120,7 +120,7 @@ public class PlayerUIScript : MonoBehaviour
         else {
             if (dir.x > 0) weaponAudioSource.panStereo = 0.65f;
             else weaponAudioSource.panStereo = -0.65f;
-        }  
+        }
         weaponAudioSource.Play();
     }
 }

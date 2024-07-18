@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttackScript : MonoBehaviour
@@ -253,10 +254,11 @@ public class PlayerAttackScript : MonoBehaviour
             }
             else if (WeaponScript.weaponGroups[WeaponScript.WeaponGroup.Laser].Contains(weaponType))
             {
-                print(weapon.shotCount);
                 GameObject _laser = Instantiate(laser);
                 var origin = (Vector2)gameObject.transform.position + Vector2.up * alignFirePos + dir * 0.8f;
-                _laser.GetComponent<LaserScript>().Fire(origin, dir, weapon.shotCount);
+                var laserScript = _laser.GetComponent<LaserScript>();
+                laserScript.damage = weapon.damage;
+                laserScript.Fire<PlayerAttackScript>(origin, dir, weapon.shotCount);
                 PlayerUIScript.Instance.PlayFireSound(dir);
             }
             else
@@ -276,7 +278,9 @@ public class PlayerAttackScript : MonoBehaviour
                             curDir = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-5, 5)) * curDir;
                             break;
                     }
-                    _bullet.GetComponent<BulletScript>().Fire(curDir, bulletSpeed, bulletRange);
+                    var bulletScript = _bullet.GetComponent<BulletScript>();
+                    bulletScript.damage = weapon.damage;
+                    bulletScript.Fire(curDir, bulletSpeed, bulletRange);
                     PlayerUIScript.Instance.PlayFireSound(curDir);
                     if (weaponType == WeaponScript.WeaponType.Burst)
                     {
