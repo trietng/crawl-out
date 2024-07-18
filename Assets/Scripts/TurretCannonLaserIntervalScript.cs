@@ -28,7 +28,7 @@ public class TurretCannonLaserIntervalScript : MonoBehaviour
     {
         if (laserScript.gameObject.activeSelf)
         {
-            laserScript.Fire<TurretCannonLaserScript>(gameObject.transform.position, firingDirection, 1);
+            laserScript.Fire<TurretCannonLaserScript>(firingOrigin, firingDirection, 1);
         }
     }
 
