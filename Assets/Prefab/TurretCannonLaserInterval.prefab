@@ -98,4 +98,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laser: {fileID: 2807934967481645018, guid: 75d170ed86648d447921f04499b0468c, type: 3}
-  interval: 1
+  interval: 10

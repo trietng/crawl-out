@@ -16,11 +16,16 @@ public class ChangeRoomScript : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            previousSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
-            print("Switch to " + sceneBuildIndex);
-            SceneManager.sceneLoaded += OnLoadedCallback;
-            SceneManager.LoadScene(sceneBuildIndex, LoadSceneMode.Single);
+            ChangeRoom();
         }
+    }
+
+    private void ChangeRoom()
+    {
+        previousSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
+        print("Switch to " + sceneBuildIndex);
+        SceneManager.sceneLoaded += OnLoadedCallback;
+        SceneManager.LoadScene(sceneBuildIndex, LoadSceneMode.Single);
     }
 
     static void OnLoadedCallback(Scene scene, LoadSceneMode mode)
