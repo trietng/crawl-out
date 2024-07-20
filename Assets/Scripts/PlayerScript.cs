@@ -9,7 +9,7 @@ public class PlayerScript : MonoBehaviour
     float hor, ver;
     Vector2 newPos;
     public float speed;
-    [NonSerialized] public float maxSpeed;
+    private float memoryOfSpeed;
     [NonSerialized] public Camera mainCam;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioClip footstepClip;
@@ -19,6 +19,7 @@ public class PlayerScript : MonoBehaviour
     
     [SerializeField] public int maxHealth;
     [NonSerialized] public int currentHealth;
+    private int memoryOfHealth;
 
     public static PlayerScript Instance { get; private set; }
 
@@ -31,7 +32,7 @@ public class PlayerScript : MonoBehaviour
             anim = GetComponent<Animator>();
             rigit = GetComponent<Rigidbody2D>();
             audi = GetComponent<AudioSource>();
-            maxSpeed = speed;
+            memoryOfSpeed = speed;
             currentHealth = maxHealth;
             DontDestroyOnLoad(gameObject);
         }
@@ -104,9 +105,32 @@ public class PlayerScript : MonoBehaviour
         gameObject.GetComponentInChildren<CapsuleCollider2D>().enabled = false;
         GameManager.Instance.TurnOffLight();
         anim.SetTrigger("isDead");
-        GameManager.Instance.PlaySound(gameOverClip);
+        GameManager.Instance.PlayLowPitchSound(gameOverClip);
         speed = 0;
         StartCoroutine(GameManager.Instance.TurnOffLight());
         GameManager.Instance.UpdateGameState(GameManager.GameState.Dead);
+    }
+
+    public void SaveHealth()
+    {
+        memoryOfHealth = currentHealth;
+    }
+
+    public void RestoreHealth()
+    {
+        currentHealth = memoryOfHealth;
+        PlayerUIScript.Instance.UpdateHealthText(currentHealth);
+    }
+
+    public void Resurrect()
+    {
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        gameObject.GetComponentInChildren<CapsuleCollider2D>().enabled = true;
+        anim.Rebind();
+        anim.Update(0f);
+        speed = memoryOfSpeed;
+        RestoreHealth();
+        PlayerAttackScript.Instance.RestoreInventory();
+        GameManager.Instance.UpdateGameState(GameManager.GameState.Nor);
     }
 }

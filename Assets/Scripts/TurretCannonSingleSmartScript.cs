@@ -59,7 +59,7 @@ public class TurretCannonSingleSmartScript : MonoBehaviour
             bulletScript.damage = damage;
             bulletScript.ApplyColorFiler(Color.white);
             bulletScript.Fire(firingDirection, 40f, 12f, BulletScript.Shooter.Turret);
-            GameManager.Instance.PlaySound(firingSound);
+            GameManager.Instance.PlayNormalPitchSound(firingSound);
         }
     }
 }

@@ -35,7 +35,14 @@ public class PlayerAttackScript : MonoBehaviour
 
         [NonSerialized] public int currentWeaponIndex;
         public static PlayerAttackScript Instance { get; private set; }
-
+        public AudioClip reloadSound;
+        public struct InventoryState
+        {
+            public WeaponScript.WeaponType ranged;
+            public int ammoCount;
+            public WeaponScript.WeaponType laser;
+        }
+        private InventoryState inventoryState;
         private void Awake()
         {
             if (Instance == null)
@@ -100,6 +107,7 @@ public class PlayerAttackScript : MonoBehaviour
                 WeaponScript.SwapWeapon(oldWeapon, weaponGameObject); 
                 PlayerUIScript.Instance.UpdateWeaponImage(weaponType);
                 PlayerUIScript.Instance.UpdateAmmoText(oldWeaponScript.ammoCount);
+                GameManager.Instance.PlayNormalPitchSound(reloadSound);
                 if (weaponScript.weaponType == WeaponScript.WeaponType.None)
                 {
                     Destroy(weaponGameObject);
@@ -153,6 +161,22 @@ public class PlayerAttackScript : MonoBehaviour
                 newWeaponIndex = -1;
             }
             return shouldChange;
+        }
+
+        public void SaveInventory()
+        {
+            inventoryState.ranged = weapons[0].GetComponent<WeaponScript>().weaponType;
+            inventoryState.ammoCount = weapons[0].GetComponent<WeaponScript>().ammoCount;
+            inventoryState.laser = weapons[2].GetComponent<WeaponScript>().weaponType;
+        }
+
+        public void RestoreInventory()
+        {
+            var rangedWeaponScript = weapons[0].GetComponent<WeaponScript>();
+            rangedWeaponScript.weaponType = inventoryState.ranged;
+            rangedWeaponScript.ammoCount = inventoryState.ammoCount;
+            PlayerUIScript.Instance.UpdateAmmoText(rangedWeaponScript.ammoCount);
+            weapons[2].GetComponent<WeaponScript>().weaponType = inventoryState.laser;
         }
 
         private void ChangeWeapon()

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public Sprite[] weaponSprites;
 
     public static event Action<GameState> OnGameStateChanged;
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             weaponSprites = Resources.LoadAll<Sprite>("Weapon");
             globalLight = GameObject.Find("Lighting").GetComponent<Light2D>();
+            audioSource = GetComponent<AudioSource>();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -50,7 +52,7 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
-        OnGameStateChanged?.Invoke(_state);
+        //OnGameStateChanged?.Invoke(_state);
     }
 
     public enum GameState
@@ -69,9 +71,16 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void PlaySound(AudioClip _audiclip)
+    public void PlayLowPitchSound(AudioClip _audiclip)
     {
-        GetComponent<AudioSource>().PlayOneShot(_audiclip);
+        audioSource.pitch = 0.7f;
+        audioSource.PlayOneShot(_audiclip);
+    }
+
+    public void PlayNormalPitchSound(AudioClip _audiclip)
+    {
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(_audiclip);
     }
 
     public IEnumerator TempRemoveCollider(GameObject coll, float sec)
@@ -85,7 +94,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // Do not use this method
+    // Call this method to turn off the light
     public IEnumerator TurnOffLight()
     {
         for (int i = 0; i < 5; i++ )

@@ -32,4 +32,11 @@ public class EndingHandlerScript : MonoBehaviour
         GameManager.Instance.DestroyAll();
         SceneManager.LoadScene(0);
     }
+
+    public void Restart()
+    {
+        ChangeRoomScript.ReloadRoom();
+        PlayerScript.Instance.Resurrect();
+        Time.timeScale = 1;
+    }
 }

@@ -26,6 +26,8 @@ public class ChangeRoomScript : MonoBehaviour
         print("Switch to " + sceneBuildIndex);
         SceneManager.sceneLoaded += OnLoadedCallback;
         SceneManager.LoadScene(sceneBuildIndex, LoadSceneMode.Single);
+        PlayerScript.Instance.SaveHealth();
+        PlayerAttackScript.Instance.SaveInventory();
     }
 
     public static void ReloadRoom()

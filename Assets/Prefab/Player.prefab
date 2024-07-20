@@ -389,6 +389,7 @@ MonoBehaviour:
   - {fileID: 6937614508527623554}
   - {fileID: 5543129930981278137}
   - {fileID: 6161336445679963562}
+  reloadSound: {fileID: 8300000, guid: 30941c65f83935b49a35e06f409b7a19, type: 3}
 --- !u!1001 &6841200292329821353
 PrefabInstance:
   m_ObjectHideFlags: 0
