@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
-  m_Name: FlameThrowerAnimation
+  m_Name: FT2
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 21300000, guid: c36d7df4b9f673943803dc1fc8b597d4, type: 3}
-  - {fileID: 21300000, guid: 0d169a2117c3c5f4282f1f6ac7e7a4d6, type: 3}
-  - {fileID: 21300000, guid: 706c747c7d480e2499b7fcfc002ca92c, type: 3}
-  - {fileID: 21300000, guid: 0a4054174e4760f4baaae9b4d02c5484, type: 3}
+  - {fileID: 21300000, guid: 5642024ee851fef41a6fa12109f97899, type: 3}
+  - {fileID: 21300000, guid: 0fdce8efe76abdc4a93a9e44fcddfe10, type: 3}
+  - {fileID: 21300000, guid: c59ec044c75f4b4438b093936b1cc808, type: 3}
+  - {fileID: 21300000, guid: 7d98714b2927b2b4faf234ac38612491, type: 3}
   m_MinSpeed: 5
   m_MaxSpeed: 5
   m_AnimationStartTime: 0

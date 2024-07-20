@@ -192,9 +192,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: TurretLaserInterval
       objectReference: {fileID: 0}
+    - target: {fileID: 1905787363277375940, guid: 3e0f65aa24e97514a9cf27ec8e777808, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1905787363277375940, guid: 3e0f65aa24e97514a9cf27ec8e777808, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1905787363277375940, guid: 3e0f65aa24e97514a9cf27ec8e777808, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223348082692371699, guid: 3e0f65aa24e97514a9cf27ec8e777808, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223348082692371699, guid: 3e0f65aa24e97514a9cf27ec8e777808, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223348082692371699, guid: 3e0f65aa24e97514a9cf27ec8e777808, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7879874009444593564, guid: 3e0f65aa24e97514a9cf27ec8e777808, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.7
+      value: 2.83
       objectReference: {fileID: 0}
     - target: {fileID: 7879874009444593564, guid: 3e0f65aa24e97514a9cf27ec8e777808, type: 3}
       propertyPath: m_LocalPosition.y
@@ -367,13 +391,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1214472315611085530, guid: 12d230134ffe280438d2b10ca765196a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9999757
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214472315611085530, guid: 12d230134ffe280438d2b10ca765196a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0029612773
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214472315611085530, guid: 12d230134ffe280438d2b10ca765196a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.0063234954
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214472315611085530, guid: 12d230134ffe280438d2b10ca765196a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214472315611085530, guid: 12d230134ffe280438d2b10ca765196a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.339
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214472315611085530, guid: 12d230134ffe280438d2b10ca765196a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.725
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214472315611085530, guid: 12d230134ffe280438d2b10ca765196a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 1560396760868722848, guid: 12d230134ffe280438d2b10ca765196a, type: 3}
       propertyPath: m_Name
       value: TurretLaser
       objectReference: {fileID: 0}
     - target: {fileID: 7879874009444593564, guid: 12d230134ffe280438d2b10ca765196a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.75
+      value: 1.92
       objectReference: {fileID: 0}
     - target: {fileID: 7879874009444593564, guid: 12d230134ffe280438d2b10ca765196a, type: 3}
       propertyPath: m_LocalPosition.y
