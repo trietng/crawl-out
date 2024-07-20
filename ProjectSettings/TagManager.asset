@@ -16,6 +16,7 @@ TagManager:
   - Key
   - Door
   - Turret
+  - TurretDetector
   layers:
   - Default
   - TransparentFX

@@ -280,7 +280,7 @@ public class PlayerAttackScript : MonoBehaviour
                     }
                     var bulletScript = _bullet.GetComponent<BulletScript>();
                     bulletScript.damage = weapon.damage;
-                    bulletScript.Fire(curDir, bulletSpeed, bulletRange);
+                    bulletScript.Fire(curDir, bulletSpeed, bulletRange, BulletScript.Shooter.Player);
                     PlayerUIScript.Instance.PlayFireSound(curDir);
                     if (weaponType == WeaponScript.WeaponType.Burst)
                     {

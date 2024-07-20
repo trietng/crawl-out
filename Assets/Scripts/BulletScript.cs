@@ -14,11 +14,29 @@ public class BulletScript : MonoBehaviour
     [SerializeField] AudioClip reloadBulletClip;
     
     [NonSerialized] public int damage;
-    private static readonly HashSet<string> onTriggerEnterTagsWhitelist = new() {
-        "PlayerBound",
+    private static readonly HashSet<string> whitelist = new()
+    {
         "Door",
-        "Key"
+        "Key",
+        "TurretDetector"
     };
+
+    private static readonly HashSet<string> playerWhitelist = new()
+    {
+        "PlayerBound"
+    };
+
+    private static readonly HashSet<string> turretWhitelist = new()
+    {
+        "Zombie"
+    };
+
+    public enum Shooter
+    {
+        Player,
+        Turret
+    }
+    private Shooter shooter;
 
     void Awake()
     {
@@ -59,7 +77,7 @@ public class BulletScript : MonoBehaviour
                 break;
         }
     }
-    public void Fire(Vector2 dir, float speed, float range)
+    public void Fire(Vector2 dir, float speed, float range, Shooter shooter)
     {
         GetComponent<Animator>().SetTrigger("fire");
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -67,24 +85,39 @@ public class BulletScript : MonoBehaviour
         fireDir = dir;
         fireSpeed = speed;
         isFire = true;
-        // GameManager._instance.PlaySound(reloadBulletClip);
+        this.shooter = shooter;
         Invoke(nameof(Explode), range / speed);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         bool hit = true;
-        if (collision.gameObject.CompareTag("Bullet") || collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Bullet"))
         {
             hit = false;
         }
-        if (collision.gameObject.CompareTag("Turret"))
+        switch (shooter)
         {
-            var turretBaseScript = collision.gameObject.GetComponent<TurretBaseScript>();
-            turretBaseScript.TakeDamage(damage);
+            case Shooter.Player:
+                if (collision.gameObject.CompareTag("Player"))
+                {
+                    hit = false;
+                }
+                if (collision.gameObject.CompareTag("Turret"))
+                {
+                    var turretBaseScript = collision.gameObject.GetComponent<TurretBaseScript>();
+                    turretBaseScript.TakeDamage(damage);
+                }
+                break;
+            case Shooter.Turret:
+                if (collision.gameObject.CompareTag("Turret"))
+                {
+                    hit = false;
+                }
+                break;
         }
         if (hit)
-        {   
+        {
             CollisionAction();
         }
     }
@@ -92,15 +125,36 @@ public class BulletScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         bool hit = true;
-        if (onTriggerEnterTagsWhitelist.Contains(collision.gameObject.tag) || collision.gameObject.tag.EndsWith("Item") || collision.gameObject.name.CompareTo("Confiner") == 0)
+        if (whitelist.Contains(collision.gameObject.tag) || 
+            collision.gameObject.tag.EndsWith("Item") || 
+            collision.gameObject.name.CompareTo("Confiner") == 0)
         {
             hit = false;
         }
-        if (collision.gameObject.CompareTag("Zombie"))
+        switch (shooter)
         {
-            var zombieScript = collision.gameObject.transform.parent.GetComponent<ZombieScript>();
-            hit = !zombieScript.isDead;
-            zombieScript.TakeDamage(damage);
+            case Shooter.Player:
+                if (collision.gameObject.CompareTag("Zombie"))
+                {
+                    var zombieScript = collision.gameObject.transform.parent.GetComponent<ZombieScript>();
+                    hit = !zombieScript.isDead;
+                    zombieScript.TakeDamage(damage);
+                }
+                if (playerWhitelist.Contains(collision.gameObject.tag))
+                {
+                    hit = false;
+                }
+                break;
+            case Shooter.Turret:
+                if (collision.gameObject.CompareTag("PlayerBound"))
+                {
+                    PlayerScript.Instance.TakeDamage(damage);
+                }
+                if (turretWhitelist.Contains(collision.gameObject.tag))
+                {
+                    hit = false;
+                }
+                break;
         }
         if (hit)
         {

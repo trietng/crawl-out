@@ -21,7 +21,6 @@ public class TurretCannonLaserScript : MonoBehaviour
         laserScript.ApplyColorFiler(WeaponScript.WeaponType.LaserIII);
         // Calculate the firing direction from the turret's rotation
         firingDirection = gameObject.transform.rotation * Vector2.up;
-        print(firingDirection);
         firingOrigin = gameObject.transform.position.ConvertTo<Vector2>() + (firingDirection * magicMultiplier);
     }
 
