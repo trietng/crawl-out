@@ -136,3 +136,5 @@ MonoBehaviour:
   bullet: {fileID: 682835529597806224, guid: 6a4e646626510254f8c2c11a0f42396c, type: 3}
   rotateSpeed: 3
   cooldown: 1
+  damage: 1
+  firingSound: {fileID: 8300000, guid: 7de597a2c18fa5b47b9c66c419dd6566, type: 3}

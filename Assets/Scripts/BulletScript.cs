@@ -77,6 +77,15 @@ public class BulletScript : MonoBehaviour
                 break;
         }
     }
+
+    public void ApplyColorFiler(Color color)
+    {
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        var light2D = GetComponent<Light2D>();
+        spriteRenderer.color = color;
+        light2D.color = color;
+    }
+
     public void Fire(Vector2 dir, float speed, float range, Shooter shooter)
     {
         GetComponent<Animator>().SetTrigger("fire");

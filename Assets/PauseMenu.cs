@@ -32,8 +32,9 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
     }
+
     public void Restart(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        ChangeRoomScript.ReloadRoom();
         Time.timeScale = 1;
     }
 

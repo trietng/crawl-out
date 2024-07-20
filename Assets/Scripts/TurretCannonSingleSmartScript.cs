@@ -15,7 +15,8 @@ public class TurretCannonSingleSmartScript : MonoBehaviour
     public float cooldown;
     public static readonly float magicMultiplier = 0.8f;
     private static readonly float angleOffset = -90f;
-    public int damage = 1;
+    public int damage;
+    public AudioClip firingSound;
 
     void Update()
     {
@@ -56,8 +57,9 @@ public class TurretCannonSingleSmartScript : MonoBehaviour
             var _bullet = Instantiate(bullet, firingOrigin, Quaternion.identity);
             bulletScript = _bullet.GetComponent<BulletScript>();
             bulletScript.damage = damage;
-            bulletScript.ApplyColorFiler(WeaponScript.WeaponType.Spread);
+            bulletScript.ApplyColorFiler(Color.white);
             bulletScript.Fire(firingDirection, 40f, 12f, BulletScript.Shooter.Turret);
+            GameManager.Instance.PlaySound(firingSound);
         }
     }
 }

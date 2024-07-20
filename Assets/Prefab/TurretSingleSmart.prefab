@@ -85,14 +85,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TurretCannonSingleSmart
       objectReference: {fileID: 0}
-    - target: {fileID: 4699063082694294477, guid: 734532770a19bb94eb81db357ce6aa6e, type: 3}
-      propertyPath: cooldown
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4699063082694294477, guid: 734532770a19bb94eb81db357ce6aa6e, type: 3}
-      propertyPath: rotateSpeed
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

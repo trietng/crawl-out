@@ -28,6 +28,12 @@ public class ChangeRoomScript : MonoBehaviour
         SceneManager.LoadScene(sceneBuildIndex, LoadSceneMode.Single);
     }
 
+    public static void ReloadRoom()
+    {
+        SceneManager.sceneLoaded += OnLoadedCallback;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+    }
+
     static void OnLoadedCallback(Scene scene, LoadSceneMode mode)
     {
         if (scene.buildIndex == 0)

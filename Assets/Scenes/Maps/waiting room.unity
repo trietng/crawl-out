@@ -626,6 +626,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8753399945913851014, guid: e6af6657d3ed82a41b47ae0e3d81ade3, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2677,6 +2681,10 @@ PrefabInstance:
       propertyPath: bulletCount
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 7544943487392584889, guid: d6d16fffbe7b89a4ca2c7ecddbfe68cd, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 4519109543666497001, guid: 7c636e512b5ced44abcf50d45381befb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
