@@ -16,12 +16,19 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] AudioClip gameOverClip;
 
     public AudioSource audi { get; private set; }
-    
+
     [SerializeField] public int maxHealth;
     [NonSerialized] public int currentHealth;
     private int memoryOfHealth;
 
     public static PlayerScript Instance { get; private set; }
+
+    [SerializeField] private float dashSpeedMultiplier = 2f;
+    [SerializeField] private float dashDuration = 0.5f;
+    [SerializeField] private float dashCooldown = 2f;
+    private bool isDashing;
+    private float dashTime;
+    private float dashCooldownTime;
 
     private void Awake()
     {
@@ -41,6 +48,7 @@ public class PlayerScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +56,7 @@ public class PlayerScript : MonoBehaviour
         anim.SetFloat("dirY", -1);
         audi.clip = footstepClip;
         PlayerUIScript.Instance.UpdateHealthText(currentHealth);
+        dashCooldownTime = dashCooldown;
     }
 
     // Update is called once per frame
@@ -56,8 +65,26 @@ public class PlayerScript : MonoBehaviour
         hor = Input.GetAxisRaw("Horizontal");
         ver = Input.GetAxisRaw("Vertical");
         anim.SetBool("isMoving", (hor != 0 || ver != 0) && IsAlive());
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing && dashCooldownTime <= 0)
+        {
+            StartDash();
+        }
+
+        if (isDashing)
+        {
+            dashTime -= Time.deltaTime;
+            if (dashTime <= 0)
+            {
+                EndDash();
+            }
+        }
+        else
+        {
+            dashCooldownTime -= Time.deltaTime;
+        }
     }
-    
+
     private void FixedUpdate()
     {
         if (anim.GetBool("isMoving"))
@@ -74,10 +101,23 @@ public class PlayerScript : MonoBehaviour
         anim.SetFloat("dirY", ver);
         newPos = rigit.transform.position;
         dir.Normalize();
-        newPos.x += dir.x * speed * Time.deltaTime;
-        newPos.y += dir.y * speed * Time.deltaTime;
+        newPos.x += dir.x * speed * Time.deltaTime * (isDashing ? dashSpeedMultiplier : 1f);
+        newPos.y += dir.y * speed * Time.deltaTime * (isDashing ? dashSpeedMultiplier : 1f);
         rigit.transform.position = newPos;
     }
+
+    void StartDash()
+    {
+        isDashing = true;
+        dashTime = dashDuration;
+        dashCooldownTime = dashCooldown;
+    }
+
+    void EndDash()
+    {
+        isDashing = false;
+    }
+
     public bool IsAlive()
     {
         // return GameManager._instance.State != GameManager.GameState.Dead;
@@ -98,7 +138,7 @@ public class PlayerScript : MonoBehaviour
 
         PlayerUIScript.Instance.UpdateHealthText(currentHealth);
     }
-    
+
     public void Die()
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
