@@ -25,7 +25,7 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] private float dashSpeedMultiplier = 2f;
     [SerializeField] private float dashDuration = 0.5f;
-    [SerializeField] private float dashCooldown = 2f;
+    [SerializeField] private float dashCooldown = 1f;
     private bool isDashing;
     private float dashTime;
     private float dashCooldownTime;
