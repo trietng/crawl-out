@@ -13,6 +13,8 @@ public class TurretCannonLaserScript : MonoBehaviour
     public static readonly float magicMultiplier = 0.5f;
     public static readonly int damage = 999;
 
+    private Animator anim;
+
     void Start()
     {
         var _laser = Instantiate(laser, transform);
@@ -21,6 +23,8 @@ public class TurretCannonLaserScript : MonoBehaviour
         laserScript.ApplyColorFiler(WeaponScript.WeaponType.LaserIII);
         // Calculate the firing direction from the turret's rotation
         firingDirection = gameObject.transform.rotation * Vector2.up;
+        print(firingDirection);
+        anim = GetComponent<Animator>();
         firingOrigin = gameObject.transform.position.ConvertTo<Vector2>() + (firingDirection * magicMultiplier);
     }
 
