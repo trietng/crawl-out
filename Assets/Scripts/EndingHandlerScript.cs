@@ -20,7 +20,7 @@ public class EndingHandlerScript : MonoBehaviour
     private TMPro.TextMeshProUGUI End()
     {
         // Disable Pause button
-        GameObject.Find("Pause Button").SetActive(false);
+        // GameObject.Find("Pause Button").SetActive(false);
         // Get TextMeshPro component
         transform.GetChild(0).gameObject.SetActive(true);
         return GetComponentInChildren<TMPro.TextMeshProUGUI>();
