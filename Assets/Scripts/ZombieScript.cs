@@ -26,7 +26,7 @@ public class ZombieScript : MonoBehaviour
     [SerializeField] LayerMask playerLayer;
     [SerializeField] float attackTimmer = 0.4f;
     float attackCounter = 0;
-    private int maxHealth = 50;
+    private int maxHealth = 20;
     private int currentHealth;
 
     AudioSource audi;
