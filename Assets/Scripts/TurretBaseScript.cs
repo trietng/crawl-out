@@ -6,6 +6,8 @@ public class TurretBaseScript : MonoBehaviour
 {
     public int health = 1;
     bool destroyed = false;
+
+    private string[] LaserComponents = { "TurretCannonLaser", "TurretCannonSingleSmart" };
     Animator anim;
     // Start is called before the first frame update
     void Start()
@@ -26,16 +28,21 @@ public class TurretBaseScript : MonoBehaviour
         if (health <= 0 && !destroyed)
         {
             destroyed = true;
+            Transform turret = null;
+            for (int i = 0; i < LaserComponents.Length; ++i) {
+                turret = transform.parent.Find(LaserComponents[i]);
+                if (turret == null) continue;
+                TurretLaserBaseScript test = turret.GetComponent(LaserComponents[i] + "Script") as TurretLaserBaseScript;
+                if (test != null) test.DisableAttack();
+                break;
+            }
+
             for (int i = 0; i < transform.parent.childCount; i++)
             {
-                if (transform.parent.GetChild(i) != transform)
+                Transform t = transform.parent.GetChild(i);
+                if (t != transform)
                 {
-                    Animator anim = transform.parent.GetChild(i).gameObject.GetComponent<Animator>();
-                    if (anim != null && anim.GetBool("Alive") == true) {
-                        Debug.Log("destroyed");
-                        anim.SetBool("Alive", false);
-                    }
-                    else transform.parent.GetChild(i).gameObject.SetActive(false);
+                    if (t != turret) t.gameObject.SetActive(false);
                 }
             }
         }

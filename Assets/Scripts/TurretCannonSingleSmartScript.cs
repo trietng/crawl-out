@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class TurretCannonSingleSmartScript : MonoBehaviour
+public class TurretCannonSingleSmartScript : TurretLaserBaseScript
 {
     // Start is called before the first frame update
     public GameObject bullet;
@@ -17,6 +17,10 @@ public class TurretCannonSingleSmartScript : MonoBehaviour
     private static readonly float angleOffset = -90f;
     public int damage;
     public AudioClip firingSound;
+
+    void Start () {
+        passAnimator(GetComponent<Animator>());
+    }
 
     void Update()
     {
@@ -33,7 +37,7 @@ public class TurretCannonSingleSmartScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (playerGameObject == null && collision.gameObject.CompareTag("PlayerBound"))
+        if (!isDestroyed() && playerGameObject == null && collision.gameObject.CompareTag("PlayerBound"))
         {
             playerGameObject = collision.gameObject;
             StartCoroutine(AttackPlayer());
@@ -50,7 +54,7 @@ public class TurretCannonSingleSmartScript : MonoBehaviour
 
     IEnumerator AttackPlayer()
     {
-        while (playerGameObject != null)
+        while (playerGameObject != null && !isDestroyed())
         {
             yield return new WaitForSeconds(cooldown);
             var firingOrigin = gameObject.transform.position + (firingDirection * magicMultiplier);

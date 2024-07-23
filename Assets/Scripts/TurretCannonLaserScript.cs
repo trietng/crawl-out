@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TurretCannonLaserScript : MonoBehaviour
+public class TurretCannonLaserScript : TurretLaserBaseScript
 {
     // Start is called before the first frame update
     public GameObject laser;
@@ -12,8 +12,6 @@ public class TurretCannonLaserScript : MonoBehaviour
     private Vector2 firingOrigin;
     public static readonly float magicMultiplier = 0.5f;
     public static readonly int damage = 999;
-
-    private Animator anim;
 
     void Start()
     {
@@ -24,14 +22,13 @@ public class TurretCannonLaserScript : MonoBehaviour
         // Calculate the firing direction from the turret's rotation
         firingDirection = gameObject.transform.rotation * Vector2.up;
         print(firingDirection);
-        anim = GetComponent<Animator>();
+        passAnimator(GetComponent<Animator>());
         firingOrigin = gameObject.transform.position.ConvertTo<Vector2>() + (firingDirection * magicMultiplier);
     }
 
     // Update is called once per frame
     void Update()
     {
-    
-        laserScript.Fire<TurretCannonLaserScript>(firingOrigin, firingDirection, 1);
+        if (!isDestroyed()) laserScript.Fire<TurretCannonLaserScript>(firingOrigin, firingDirection, 1);
     }
 }
