@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1386512795074519687}
   - component: {fileID: 4158352542642886187}
   - component: {fileID: 4699063082694294477}
+  - component: {fileID: 3899092799761286779}
   m_Layer: 0
   m_Name: TurretCannonSingleSmart
   m_TagString: Untagged
@@ -138,3 +139,24 @@ MonoBehaviour:
   cooldown: 1
   damage: 1
   firingSound: {fileID: 8300000, guid: 7de597a2c18fa5b47b9c66c419dd6566, type: 3}
+--- !u!95 &3899092799761286779
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4360619045798095010}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 98bf2fa744525436fa37fa85a6dcd1c1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

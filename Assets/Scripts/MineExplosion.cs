@@ -22,13 +22,15 @@ public class MineExplosion : MonoBehaviour
     {
         if (!destroyed && collision.CompareTag("Player"))
         {
-            Destroy();
+            Debug.Log("Stepped");
+            Explode();
         }
     }
 
-    private void Destroy()
+    private void Explode()
     {
         destroyed = true;
         PlayerScript.Instance.TakeDamage(mineDamage);
+        anim.SetBool("Alive", false);
     }
 }
