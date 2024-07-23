@@ -444,6 +444,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WeaponBurst
       objectReference: {fileID: 0}
+    - target: {fileID: 4946156063182294021, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.22
+      objectReference: {fileID: 0}
     - target: {fileID: 5396177519880735514, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: weaponType
       value: 3
@@ -454,7 +458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8896959502739017038, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.64
+      value: 2.14
       objectReference: {fileID: 0}
     - target: {fileID: 8896959502739017038, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: m_LocalPosition.z
@@ -674,6 +678,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WeaponSingle
       objectReference: {fileID: 0}
+    - target: {fileID: 4946156063182294021, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 5396177519880735514, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: weaponType
       value: 2
@@ -684,7 +692,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8896959502739017038, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.68
+      value: 2.18
       objectReference: {fileID: 0}
     - target: {fileID: 8896959502739017038, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: m_LocalPosition.z
@@ -735,6 +743,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WeaponSpread
       objectReference: {fileID: 0}
+    - target: {fileID: 4946156063182294021, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 5396177519880735514, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: weaponType
       value: 4
@@ -745,7 +757,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8896959502739017038, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.41
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 8896959502739017038, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1148,7 +1160,7 @@ Tilemap:
       - {fileID: 21300000, guid: 3b9f9459cd6ebed43ad6d684fb292750, type: 3}
       - {fileID: 21300000, guid: da83cf6b9a5ff2749a1043e9d9e58f8f, type: 3}
       - {fileID: 21300000, guid: 877157a7f9c23054c9df5ce23f0f2e1b, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -2, y: 4, z: 0}
@@ -3118,6 +3130,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WeaponAuto
       objectReference: {fileID: 0}
+    - target: {fileID: 4946156063182294021, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.24
+      objectReference: {fileID: 0}
     - target: {fileID: 5396177519880735514, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: weaponType
       value: 5
@@ -3128,7 +3144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8896959502739017038, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.37
+      value: 0.07999998
       objectReference: {fileID: 0}
     - target: {fileID: 8896959502739017038, guid: 30ba7d9e0bbfb7843ae65b3f2b61b655, type: 3}
       propertyPath: m_LocalPosition.z
