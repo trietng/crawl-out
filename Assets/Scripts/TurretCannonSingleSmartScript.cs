@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class TurretCannonSingleSmartScript : TurretLaserBaseScript
 {
@@ -10,6 +8,7 @@ public class TurretCannonSingleSmartScript : TurretLaserBaseScript
     public GameObject bullet;
     private BulletScript bulletScript;
     private GameObject playerGameObject;
+    private Vector3 firingOrigin;
     private Vector3 firingDirection;
     public float rotateSpeed;
     public float cooldown;
@@ -17,9 +16,11 @@ public class TurretCannonSingleSmartScript : TurretLaserBaseScript
     private static readonly float angleOffset = -90f;
     public int damage;
     public AudioClip firingSound;
+    private float radius;
 
     void Start () {
         passAnimator(GetComponent<Animator>());
+        radius = GetComponent<CircleCollider2D>().radius;
     }
 
     void Update()
@@ -52,18 +53,27 @@ public class TurretCannonSingleSmartScript : TurretLaserBaseScript
         }
     }
 
+    bool IsPlayerInSight()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(firingOrigin, firingDirection, radius);
+        return hits.SkipLast(1).All(hit => hit.collider.name != "walls");
+    }
+
     IEnumerator AttackPlayer()
     {
         while (playerGameObject != null && !isDestroyed())
         {
             yield return new WaitForSeconds(cooldown);
-            var firingOrigin = gameObject.transform.position + (firingDirection * magicMultiplier);
-            var _bullet = Instantiate(bullet, firingOrigin, Quaternion.identity);
-            bulletScript = _bullet.GetComponent<BulletScript>();
-            bulletScript.damage = damage;
-            bulletScript.ApplyColorFiler(Color.white);
-            bulletScript.Fire(firingDirection, 40f, 12f, BulletScript.Shooter.Turret);
-            GameManager.Instance.PlayNormalPitchSound(firingSound);
+            firingOrigin = gameObject.transform.position + (firingDirection * magicMultiplier);
+            if (IsPlayerInSight())
+            {
+                var _bullet = Instantiate(bullet, firingOrigin, Quaternion.identity);
+                bulletScript = _bullet.GetComponent<BulletScript>();
+                bulletScript.damage = damage;
+                bulletScript.ApplyColorFiler(Color.white);
+                bulletScript.Fire(firingDirection, 40f, 12f, BulletScript.Shooter.Turret);
+                GameManager.Instance.PlayNormalPitchSound(firingSound);
+            }
         }
     }
 }
