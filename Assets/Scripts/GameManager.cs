@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
-        //OnGameStateChanged?.Invoke(_state);
+        OnGameStateChanged?.Invoke(_state);
     }
 
     public enum GameState

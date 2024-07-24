@@ -141,8 +141,7 @@ public class PlayerScript : MonoBehaviour
 
     public void Die()
     {
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        gameObject.GetComponentInChildren<CapsuleCollider2D>().enabled = false;
+        MakeInvincible();
         GameManager.Instance.TurnOffLight();
         anim.SetTrigger("isDead");
         GameManager.Instance.PlayLowPitchSound(gameOverClip);
@@ -162,15 +161,25 @@ public class PlayerScript : MonoBehaviour
         PlayerUIScript.Instance.UpdateHealthText(currentHealth);
     }
 
-    public void Resurrect()
+    public void MakeInvincible()
+    {
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        gameObject.GetComponentInChildren<CapsuleCollider2D>().enabled = false;
+    }
+
+    public void RevokeInvincibility()
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
         gameObject.GetComponentInChildren<CapsuleCollider2D>().enabled = true;
-        anim.Rebind();
-        anim.Update(0f);
-        speed = memoryOfSpeed;
+    }
+
+    public void Resurrect()
+    {
         RestoreHealth();
         PlayerAttackScript.Instance.RestoreInventory();
         GameManager.Instance.UpdateGameState(GameManager.GameState.Nor);
+        anim.Rebind();
+        anim.Update(0f);
+        speed = memoryOfSpeed;
     }
 }

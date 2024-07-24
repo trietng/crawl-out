@@ -47,6 +47,8 @@ public class ChangeRoomScript : MonoBehaviour
 
         PlayerScript.Instance.mainCam = mainCam;
         PlayerAttackScript.Instance.mainCam = mainCam;
+        PlayerScript.Instance.SaveHealth();
+        PlayerAttackScript.Instance.SaveInventory();
         GameManager.globalLight = GameObject.Find("Lighting").GetComponent<Light2D>();
 
         // Find the virtual camera object
@@ -63,6 +65,7 @@ public class ChangeRoomScript : MonoBehaviour
             var offset = new Vector3(0, 2, 0) * (scene.buildIndex > previousSceneBuildIndex ? -1 : 1);
             player.transform.position = exitAnchor.transform.position + offset;
         }
+        PlayerScript.Instance.RevokeInvincibility();
     }
 
 }

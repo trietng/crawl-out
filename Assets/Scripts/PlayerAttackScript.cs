@@ -177,6 +177,8 @@ public class PlayerAttackScript : MonoBehaviour
             rangedWeaponScript.ammoCount = inventoryState.ammoCount;
             PlayerUIScript.Instance.UpdateAmmoText(rangedWeaponScript.ammoCount);
             weapons[2].GetComponent<WeaponScript>().weaponType = inventoryState.laser;
+            PlayerUIScript.Instance.UpdateWeaponImage(inventoryState.ranged);
+            PlayerUIScript.Instance.UpdateWeaponImage(inventoryState.laser);
         }
 
         private void ChangeWeapon()

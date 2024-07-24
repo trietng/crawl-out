@@ -35,8 +35,8 @@ public class EndingHandlerScript : MonoBehaviour
 
     public void Restart()
     {
-        ChangeRoomScript.ReloadRoom();
         PlayerScript.Instance.Resurrect();
+        ChangeRoomScript.ReloadRoom();
         Time.timeScale = 1;
     }
 }
