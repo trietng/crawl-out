@@ -72,6 +72,3 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 .vscode/
-
-# Build folders
-/[Ww]eb/
