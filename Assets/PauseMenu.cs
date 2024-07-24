@@ -33,7 +33,9 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void Restart(){
+    public void Restart()
+    {
+        PlayerScript.Instance.Resurrect();
         ChangeRoomScript.ReloadRoom();
         Time.timeScale = 1;
     }
