@@ -22,7 +22,6 @@ public class MineExplosion : MonoBehaviour
     {
         if (!destroyed && collision.CompareTag("Player"))
         {
-            Debug.Log("Stepped");
             Explode();
         }
     }
@@ -32,5 +31,6 @@ public class MineExplosion : MonoBehaviour
         destroyed = true;
         PlayerScript.Instance.TakeDamage(mineDamage);
         anim.SetBool("Alive", false);
+        GameManager.Instance.PlayMineExplosion();
     }
 }

@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     public static event Action<GameState> OnGameStateChanged;
     private AudioSource audioSource;
+    public AudioClip turretExplosion;
+    public AudioClip mineExplosion;
 
     private void Awake()
     {
@@ -81,6 +83,23 @@ public class GameManager : MonoBehaviour
     {
         audioSource.pitch = 1f;
         audioSource.PlayOneShot(_audiclip);
+    }
+
+    public void PlayTurretExplosion()
+    {
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(turretExplosion);
+    }
+
+    public void PlayMineExplosion()
+    {
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(mineExplosion);
+    }
+
+    public void StopSound()
+    {
+        audioSource.Stop();
     }
 
     public IEnumerator TempRemoveCollider(GameObject coll, float sec)

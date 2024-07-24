@@ -27,6 +27,7 @@ public class TurretBaseScript : MonoBehaviour
         health -= damage;
         if (health <= 0 && !destroyed)
         {
+            
             destroyed = true;
             Transform turret = null;
             for (int i = 0; i < LaserComponents.Length; ++i) {
@@ -45,6 +46,7 @@ public class TurretBaseScript : MonoBehaviour
                     if (t != turret) t.gameObject.SetActive(false);
                 }
             }
+            GameManager.Instance.PlayTurretExplosion();
         }
     }
 }

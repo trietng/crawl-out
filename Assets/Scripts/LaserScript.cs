@@ -65,7 +65,7 @@ public class LaserScript : MonoBehaviour
                 }
                 if (typeof(T) == typeof(TurretCannonLaserScript))
                 {
-                    if (hits[j].collider.gameObject.CompareTag("PlayerBound") && hits[j].collider.transform.parent.gameObject.TryGetComponent<PlayerScript>(out var player))
+                    if (hits[j].collider.gameObject.CompareTag("Player") && hits[j].collider.transform.TryGetComponent<PlayerScript>(out var player))
                     {
                         destination = hits[j];
                         player.TakeDamage(damage);

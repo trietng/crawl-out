@@ -7,7 +7,12 @@ public class EndingHandlerScript : MonoBehaviour
 {
     public void Win()
     {
-        // TODO: Implement the Win method
+        var text = End();
+        text.text = "You win!";
+        transform.GetChild(0).GetChild(0).GetChild(0).GetChild(1).gameObject.SetActive(false);
+        Time.timeScale = 0;
+        PlayerScript.Instance.audi.Stop();
+        StartCoroutine(GameManager.Instance.TurnOffLight());
     }
 
     public void Die()
