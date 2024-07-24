@@ -56,6 +56,7 @@ public class ChangeRoomScript : MonoBehaviour
         // Set the virtual camera's follow target to the player
         virtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
         // Find ExitAnchor where buildIndex is the previousSceneBuildIndex
+        print("Previous scene build index: " + previousSceneBuildIndex);
         var exitAnchor = GameObject.FindGameObjectsWithTag("ExitAnchor")
         .Where(item => item.GetComponent<ChangeRoomScript>().sceneBuildIndex == previousSceneBuildIndex)
         .FirstOrDefault();

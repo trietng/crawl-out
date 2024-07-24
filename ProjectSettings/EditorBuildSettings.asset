@@ -9,12 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Maps/MainMenu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/OpeningScene.unity
-    guid: cf2c67abe91de124c8278e954094e76e
-  - enabled: 0
-    path: Assets/Scenes/Maze1.unity
-    guid: f2743e6cfed0f2f4ebed6b7ce4ffc4ea
-  - enabled: 1
     path: Assets/Scenes/Maps/waiting room.unity
     guid: 5cf0036b19040244db65b4ab2910f6b9
   - enabled: 1

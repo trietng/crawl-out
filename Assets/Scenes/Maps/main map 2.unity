@@ -6816,7 +6816,7 @@ Tilemap:
       - {fileID: 21300000, guid: a7a8a43fdadf4804d94807b2fb6603e2, type: 3}
       - {fileID: 21300000, guid: 4a67486b4e20ddf46b2b8caac5f6fe7f, type: 3}
       - {fileID: 21300000, guid: 7ecffb807ba91344faf4e05d23c66c77, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 14, y: -24, z: 0}
@@ -6838,7 +6838,7 @@ Tilemap:
       - {fileID: 21300000, guid: a7a8a43fdadf4804d94807b2fb6603e2, type: 3}
       - {fileID: 21300000, guid: 4a67486b4e20ddf46b2b8caac5f6fe7f, type: 3}
       - {fileID: 21300000, guid: 7ecffb807ba91344faf4e05d23c66c77, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 16, y: -24, z: 0}
@@ -6893,7 +6893,7 @@ Tilemap:
       - {fileID: 21300000, guid: a7a8a43fdadf4804d94807b2fb6603e2, type: 3}
       - {fileID: 21300000, guid: 4a67486b4e20ddf46b2b8caac5f6fe7f, type: 3}
       - {fileID: 21300000, guid: 7ecffb807ba91344faf4e05d23c66c77, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 9, y: -22, z: 0}
@@ -7124,7 +7124,7 @@ Tilemap:
       - {fileID: 21300000, guid: a7a8a43fdadf4804d94807b2fb6603e2, type: 3}
       - {fileID: 21300000, guid: 4a67486b4e20ddf46b2b8caac5f6fe7f, type: 3}
       - {fileID: 21300000, guid: 7ecffb807ba91344faf4e05d23c66c77, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 15, y: -19, z: 0}
@@ -7234,7 +7234,7 @@ Tilemap:
       - {fileID: 21300000, guid: a7a8a43fdadf4804d94807b2fb6603e2, type: 3}
       - {fileID: 21300000, guid: 4a67486b4e20ddf46b2b8caac5f6fe7f, type: 3}
       - {fileID: 21300000, guid: 7ecffb807ba91344faf4e05d23c66c77, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -13, z: 0}
@@ -7245,7 +7245,7 @@ Tilemap:
       - {fileID: 21300000, guid: a7a8a43fdadf4804d94807b2fb6603e2, type: 3}
       - {fileID: 21300000, guid: 4a67486b4e20ddf46b2b8caac5f6fe7f, type: 3}
       - {fileID: 21300000, guid: 7ecffb807ba91344faf4e05d23c66c77, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: -13, z: 0}
@@ -7605,7 +7605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19939e3bddce03e40bd91f52db66ea43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneBuildIndex: 3
+  sceneBuildIndex: 2
 --- !u!61 &1481459870
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20760,7 +20760,7 @@ Tilemap:
       - {fileID: 21300000, guid: 3b9f9459cd6ebed43ad6d684fb292750, type: 3}
       - {fileID: 21300000, guid: da83cf6b9a5ff2749a1043e9d9e58f8f, type: 3}
       - {fileID: 21300000, guid: 877157a7f9c23054c9df5ce23f0f2e1b, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -27, z: 0}
@@ -20808,7 +20808,7 @@ Tilemap:
       - {fileID: 21300000, guid: 3b9f9459cd6ebed43ad6d684fb292750, type: 3}
       - {fileID: 21300000, guid: da83cf6b9a5ff2749a1043e9d9e58f8f, type: 3}
       - {fileID: 21300000, guid: 877157a7f9c23054c9df5ce23f0f2e1b, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -21, z: 0}
@@ -20882,7 +20882,7 @@ Tilemap:
       - {fileID: 21300000, guid: 3b9f9459cd6ebed43ad6d684fb292750, type: 3}
       - {fileID: 21300000, guid: da83cf6b9a5ff2749a1043e9d9e58f8f, type: 3}
       - {fileID: 21300000, guid: 877157a7f9c23054c9df5ce23f0f2e1b, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: -18, z: 0}
@@ -22180,7 +22180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19939e3bddce03e40bd91f52db66ea43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneBuildIndex: 5
+  sceneBuildIndex: 4
 --- !u!61 &1975139596
 BoxCollider2D:
   m_ObjectHideFlags: 0
